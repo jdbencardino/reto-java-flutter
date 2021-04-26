@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
@@ -68,8 +69,8 @@ void getMovies() async {
     Uri link = Uri.parse(url_get_movies);
     //List<String> _peliculas =  await ;
     var respuesta = await http.get(link);
-    print(respuesta.body);
-    print(respuesta);
+    var title=jsonDecode(respuesta.body)['_embedded']['films'][3]['title'];
+    print(title);
   } catch (e) {
     print(e);
   }
