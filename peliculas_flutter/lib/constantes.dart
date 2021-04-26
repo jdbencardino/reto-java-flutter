@@ -1,6 +1,6 @@
 // constantes globales
 
-const String url_get_movies = 'http:localhost:8080/get/movies';
+const String url_get_movies = 'http://';
 
 //Rutas de navegacion >>
 
