@@ -9,6 +9,8 @@ import sun.security.util.Password;
 import javax.persistence.*;
 import java.util.Date;
 
+@Inheritance (strategy = InheritanceType.JOINED)
+
 @Entity
 @Table(name="user")
 @Getter
