@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
+@Inheritance (strategy = InheritanceType.JOINED)
+
 @Entity
 @Table(name="user")
 @Getter

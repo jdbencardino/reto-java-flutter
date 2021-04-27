@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name="film")
@@ -40,9 +41,13 @@ public class Film {
     @JoinColumn(name="category_id", nullable = false)
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name="actor_id",     nullable = false)
-    private Actor actor;
+    @ManyToMany
+    @JoinTable(
+            name = "film_actor",
+            joinColumns = @JoinColumn(name="film_id"),
+            inverseJoinColumns = @JoinColumn(name="actor_id")
+    )
+    Set<Actor> actorSet;
 
     @ManyToOne
     @JoinColumn(name="director_id", nullable = false)
