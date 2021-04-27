@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas_flutter/offDatabase.dart';
 
 class NoRegUsScreen extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
 class BodyLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    getMovies();
     return _myListView(context);
   }
 }
@@ -40,23 +42,9 @@ ListTile listTile(String value) {
   );
 }
 
-void blankList() {
-  _list.clear();
-}
-
-void getList() {
-  _list.add(listTile('El conde de montecristo'));
-  _list.add(listTile('Votos de amor'));
-  _list.add(listTile('Jason Bourne'));
-  _list.add(listTile('FMI 4 - protocolo fantasma'));
-  _list.add(listTile('FMI 6 - repercusion'));
-}
-
 // replace this function with the code in the examples
 Widget _myListView(BuildContext context) {
-  blankList();
-  getList();
-  getMovies();
+  _list.clear();
   return ListView(
     children: <Widget>[
       ..._list,
@@ -69,8 +57,14 @@ void getMovies() async {
     Uri link = Uri.parse(url_get_movies);
     //List<String> _peliculas =  await ;
     var respuesta = await http.get(link);
-    var title=jsonDecode(respuesta.body)['_embedded']['films'][3]['title'];
-    print(title);
+    for (int i = 0; i < 5; i++) {
+      _list.add(
+        listTile(
+          jsonDecode(respuesta.body)['_embedded']['films'][i]['title'],
+        ),
+      );
+      print(jsonDecode(respuesta.body)['_embedded']['films'][i]['title']);
+    }
   } catch (e) {
     print(e);
   }

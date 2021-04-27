@@ -6,3 +6,4 @@ const String url_get_movies = 'http://localhost:8080/films';
 
 const String mainScreenId = '/';
 const String noRegUsScreen = '/noRegUsScreen';
+const String mainScreenInside = '/mainScreenInside';
