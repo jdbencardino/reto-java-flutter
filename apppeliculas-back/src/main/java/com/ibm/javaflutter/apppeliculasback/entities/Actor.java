@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name="film_actor")
+@Table(name="actor")
 @Getter
 @Setter
 
@@ -19,11 +19,11 @@ public class Actor {
     @Column(name="id")
     private long id;
 
-    @Column(name="actor_name")
+    @Column(name="name")
     private String actor_name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "actor")
-    private Set<Film> films;
+    @ManyToMany(mappedBy = "actorSet")
+    Set<Film> filmSet;
 
 }
 

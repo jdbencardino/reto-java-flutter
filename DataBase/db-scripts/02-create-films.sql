@@ -63,7 +63,7 @@ AUTO_INCREMENT = 1;
 -- -----------------------------------------------------
 -- Table `peliculas-app-back`.`actor_film`
 -- -----------------------------------------------------
-CREATE TABLE `actor_film` (
+CREATE TABLE IF NOT EXISTS `peliculas-app-back`.`film_actor` (
     `film_id` BIGINT(20) NOT NULL,
     `actor_id` BIGINT(20) NOT NULL,
     PRIMARY KEY (`film_id`, `actor_id`),
@@ -113,6 +113,6 @@ INSERT INTO film (title, description, date, category_id, date_created, director_
 VALUES ('Halloween5', 'Película terror halloween 5', NOW(), 1, NOW(),1);
 
 -- Actores de peliculas
-INSERT INTO actor_film(film_id, actor_id) VALUES (4,1);
-INSERT INTO actor_film(film_id, actor_id) VALUES (4,2);
-INSERT INTO actor_film(film_id, actor_id) VALUES (1,1);
+INSERT INTO film_actor(film_id, actor_id) VALUES (4,1);
+INSERT INTO film_actor(film_id, actor_id) VALUES (4,2);
+INSERT INTO film_actor(film_id, actor_id) VALUES (1,1);
