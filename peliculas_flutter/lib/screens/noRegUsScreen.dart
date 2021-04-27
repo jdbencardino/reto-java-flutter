@@ -19,7 +19,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
         primarySwatch: Colors.teal,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Peliculas!')),
+        appBar: AppBar(title: Text('Peliculas disponibles')),
         body: BodyLayout(),
       ),
     );
@@ -29,12 +29,18 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
 class BodyLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    getMovies();
-    return _myListView(context);
+    return FutureBuilder(
+      builder: (context, projectSnap) {
+        if (projectSnap.connectionState == ConnectionState.none &&
+            projectSnap.hasData == null) {
+          return Container();
+        }
+        return _myListView();
+      },
+      future: _myList(),
+    );
   }
 }
-
-List<ListTile> _list = [];
 
 ListTile listTile(String value) {
   return ListTile(
@@ -42,30 +48,41 @@ ListTile listTile(String value) {
   );
 }
 
-// replace this function with the code in the examples
-Widget _myListView(BuildContext context) {
-  _list.clear();
-  return ListView(
-    children: <Widget>[
-      ..._list,
-    ],
-  );
-}
+List<ListTile> _list = [];
 
-void getMovies() async {
+Future _myList() async {
+  _list.clear();
   try {
     Uri link = Uri.parse(url_get_movies);
     //List<String> _peliculas =  await ;
     var respuesta = await http.get(link);
-    for (int i = 0; i < 5; i++) {
+    int i = 0;
+    while (
+        jsonDecode(respuesta.body)['_embedded']['films'][i]['title'] != null) {
       _list.add(
         listTile(
           jsonDecode(respuesta.body)['_embedded']['films'][i]['title'],
         ),
       );
-      print(jsonDecode(respuesta.body)['_embedded']['films'][i]['title']);
     }
+    // for (int i = 0; i < 5; i++) {
+    //   _list.add(
+    //     listTile(
+    //       jsonDecode(respuesta.body)['_embedded']['films'][i]['title'],
+    //     ),
+    //   );
+    // }
+    return _list;
   } catch (e) {
     print(e);
+    return null;
   }
+}
+
+Widget _myListView() {
+  return ListView(
+    children: <Widget>[
+      ..._list,
+    ],
+  );
 }

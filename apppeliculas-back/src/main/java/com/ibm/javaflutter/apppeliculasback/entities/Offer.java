@@ -2,7 +2,6 @@ package com.ibm.javaflutter.apppeliculasback.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-import oracle.jrockit.jfr.openmbean.ProducerDescriptorType;
 
 import javax.persistence.*;
 import java.util.Date;
