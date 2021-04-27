@@ -19,7 +19,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
         primarySwatch: Colors.teal,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('ListViews')),
+        appBar: AppBar(title: Text('Peliculas!')),
         body: BodyLayout(),
       ),
     );

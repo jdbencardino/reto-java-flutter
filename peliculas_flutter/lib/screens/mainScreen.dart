@@ -51,19 +51,17 @@ class _bodyLayoutState extends State<bodyLayout> {
         children: <Widget>[
           expandedTextButton(() {
             setState(() {
-              // todo reg
+              Navigator.pushNamed(context, noRegUsScreen);
             });
           }, 'Entrada sin registro para usuarios'),
           Row(
             children: <Widget>[
               expandedTextButton(() {
-                setState(() {
-                  // todo reg
-                });
+                setState(() {});
               }, 'Registrarse como usuario'),
               expandedTextButton(() {
                 setState(() {
-                  Navigator.pushNamed(context, mainScreenInside);
+                  Navigator.pushNamed(context, logUser);
                 });
               }, 'Entrar como usuario')
             ],
