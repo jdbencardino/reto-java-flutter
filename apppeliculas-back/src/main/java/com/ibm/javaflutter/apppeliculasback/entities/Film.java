@@ -40,4 +40,12 @@ public class Film {
     @JoinColumn(name="category_id", nullable = false)
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name="actor_id",     nullable = false)
+    private Actor actor;
+
+    @ManyToOne
+    @JoinColumn(name="director_id", nullable = false)
+    private Director director;
+
 }
