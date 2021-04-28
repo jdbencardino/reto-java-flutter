@@ -24,10 +24,10 @@ public class Offer {
     @Column(name="deadline")
     private Date deadline;
 
-    @Column(name="addPoints")
+    @Column(name="add_points")
     private int addPoints;
 
-    @Column(name="subPoints")
+    @Column(name="sub_points")
     private int subPoints;
 
     @ManyToOne
