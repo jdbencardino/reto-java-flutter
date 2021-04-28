@@ -14,10 +14,10 @@ import javax.persistence.*;
 
 public class Subscriber extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private long id;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="id")
+//    private long id;
 
     @Column(name = "points")
     private String points;

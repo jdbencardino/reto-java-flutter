@@ -21,12 +21,11 @@ AUTO_INCREMENT = 1;
 -- Table `peliculas-app-back`.`subscriber`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `peliculas-app-back`.`subscriber` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `points` INT UNSIGNED DEFAULT 0,
   `user_id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_user` (`user_id`),
-  CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  `points` INT UNSIGNED DEFAULT 0,
+  PRIMARY KEY (`user_id`),
+  KEY `fk_subscriber_user` (`user_id`),
+  CONSTRAINT `fk_subscriber_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) 
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
@@ -35,12 +34,10 @@ AUTO_INCREMENT = 1;
 -- Table `peliculas-app-back`.`admin`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `peliculas-app-back`.`admin` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_user` (`user_id`)
-  -- ,
-  -- CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  PRIMARY KEY (`user_id`),
+  KEY `fk_admin_user` (`user_id`),
+  CONSTRAINT `fk_admin_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) 
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
@@ -49,14 +46,12 @@ AUTO_INCREMENT = 1;
 -- Table `peliculas-app-back`.`cinema`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `peliculas-app-back`.`cinema` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `web` VARCHAR(255) NULL DEFAULT NULL,
-  `adress` VARCHAR(255) NULL DEFAULT NULL,
   `user_id` BIGINT(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_user` (`user_id`)
-  -- ,
-  -- CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+  `web` VARCHAR(255) NULL DEFAULT NULL,
+  `address` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `fk_cinema_user` (`user_id`),
+  CONSTRAINT `fk_cinema_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) 
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
@@ -73,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `peliculas-app-back`.`offer` (
   `cinema_id` BIGINT(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_cinema` (`cinema_id`),
-  CONSTRAINT `fk_cinema` FOREIGN KEY (`cinema_id`) REFERENCES `cinema` (`id`)
+  CONSTRAINT `fk_cinema` FOREIGN KEY (`cinema_id`) REFERENCES `cinema` (`user_id`)
 ) 
 ENGINE=InnoDB
 AUTO_INCREMENT = 1;
@@ -96,7 +91,7 @@ VALUES ('cristian', '012', 'cristian','arenas', 'cd@ibm.com');
 
 INSERT INTO subscriber (points, user_id) VALUES (10, 2);
 INSERT INTO admin (user_id) VALUES (3);
-INSERT INTO cinema (web, adress, user_id) VALUES ('ibm.com','cra 1 #2 - 3', 4);
+INSERT INTO cinema (web, address, user_id) VALUES ('ibm.com','cra 1 #2 - 3', 4);
 
 INSERT INTO offer(description, deadline, addPoints, subPoints, cinema_id) 
-VALUES ('Oferton', '2021-05-29', 10 , 0, 1);
+VALUES ('Oferton', '2021-05-29', 10 , 0, 4);
