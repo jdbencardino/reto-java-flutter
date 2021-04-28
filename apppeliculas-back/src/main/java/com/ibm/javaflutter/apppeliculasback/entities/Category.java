@@ -19,7 +19,7 @@ public class Category {
     @Column(name="category_name")
     private String category_name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     private Set<Film> films;
-
 }

@@ -53,4 +53,7 @@ public class Film {
     @JoinColumn(name="director_id", nullable = false)
     private Director director;
 
+    @OneToMany(mappedBy = "film")
+    Set<FilmList> filmLists;
+
 }

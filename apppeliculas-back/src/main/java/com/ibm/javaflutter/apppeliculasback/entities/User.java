@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Inheritance (strategy = InheritanceType.JOINED)
 
@@ -33,4 +34,7 @@ public class User {
 
     @Column(name="email")
     private String email;
+
+    @OneToMany(mappedBy = "user")
+    Set<FilmList> filmLists;
 }
