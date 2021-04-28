@@ -70,6 +70,7 @@ class _bodyLayoutState extends State<bodyLayout> {
           ),
           expandedTextButton(() {
             setState(() {
+              Navigator.pushNamed(context, mainScreenInside);
               // todo reg
             });
           }, 'Entrada como cine'),
