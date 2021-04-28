@@ -15,7 +15,6 @@ import java.util.Set;
 
 public class Cinema extends User{
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private long id;
