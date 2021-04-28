@@ -17,7 +17,7 @@ class _LogUserState extends State<LogUser> {
   }
 }
 
-void entrar() async {
+void entrar(context, username, password) async {
   try {
     String url2 = 'http://localhost/logUser$username#$password';
     String url =
@@ -27,9 +27,10 @@ void entrar() async {
     // var users = jsonDecode(respuesta.body)['_embedded']['users'] as Map<String, dynamic>;
 
     if (jsonDecode(respuesta.body)['_embedded']['users'].length != 0) {
-      print('YEIII');
+      //print('YEIII');
+      Navigator.pushNamed(context, mainScreenInside);
     } else {
-      print('Ohh nooooo');
+      //print('Ohh nooooo');
     }
   } catch (e) {
     print(e);

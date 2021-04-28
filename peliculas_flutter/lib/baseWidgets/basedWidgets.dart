@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
 
-String username, password;
-
 Widget basedLoginWidget(
     String title, BuildContext context, @required Function onClick) {
+  String username, password;
+
   return Material(
     child: SafeArea(
       child: Center(
@@ -14,6 +14,7 @@ Widget basedLoginWidget(
           children: [
             Center(
               child: TextField(
+                decoration: InputDecoration(hintText: 'Ingrese su email'),
                 onChanged: (value) {
                   username = value;
                 },
@@ -22,6 +23,7 @@ Widget basedLoginWidget(
             ),
             Center(
               child: TextField(
+                decoration: InputDecoration(hintText: 'Ingrese su contraseña '),
                 onChanged: (value) {
                   password = value;
                 },
@@ -33,7 +35,7 @@ Widget basedLoginWidget(
               onPressed: () async {
                 if (username != null && password != null) {
                   if (username.isNotEmpty && password.isNotEmpty) {
-                    onClick();
+                    onClick(context, username, password);
                   } else {
                     print('ingrese algun usuario y contraseña');
                   }
@@ -49,7 +51,9 @@ Widget basedLoginWidget(
   );
 }
 
-Widget basedRegisterWidget() {
+Widget basedRegisterWidget(
+    String title, BuildContext context, @required Function onClick) {
+  String username, name, surname, email, password;
   return Material(
     child: SafeArea(
       child: Center(
@@ -57,6 +61,8 @@ Widget basedRegisterWidget() {
           children: [
             Center(
               child: TextField(
+                decoration:
+                    InputDecoration(hintText: 'Ingrese su nombre de usuario'),
                 onChanged: (value) {
                   username = value;
                 },
@@ -65,6 +71,37 @@ Widget basedRegisterWidget() {
             ),
             Center(
               child: TextField(
+                decoration:
+                    InputDecoration(hintText: 'Ingrese su nombre nombre'),
+                onChanged: (value) {
+                  name = value;
+                },
+                controller: TextEditingController(),
+              ),
+            ),
+            Center(
+              child: TextField(
+                decoration:
+                    InputDecoration(hintText: 'Ingrese su nombre de apellido'),
+                onChanged: (value) {
+                  surname = value;
+                },
+                controller: TextEditingController(),
+              ),
+            ),
+            Center(
+              child: TextField(
+                decoration:
+                    InputDecoration(hintText: 'Ingrese su nombre email'),
+                onChanged: (value) {
+                  email = value;
+                },
+                controller: TextEditingController(),
+              ),
+            ),
+            Center(
+              child: TextField(
+                decoration: InputDecoration(hintText: 'Ingrese su contraseña'),
                 onChanged: (value) {
                   password = value;
                 },
@@ -73,23 +110,23 @@ Widget basedRegisterWidget() {
             ),
             RaisedButton(
               child: Text('Entrar'),
-              onPressed: () async {
-                if (username != null && password != null) {
-                  if (username.isNotEmpty && password.isNotEmpty) {
-                    try {
-                      String url =
-                          'http://localhost/logUser$username#$password';
-                      Uri link = Uri.parse(url_get_movies);
-                      var respuesta = await http.get(link);
-                      print(respuesta.statusCode);
-                    } catch (e) {
-                      print(e);
-                    }
+              onPressed: () {
+                if (username != null &&
+                    name != null &&
+                    surname != null &&
+                    email != null &&
+                    password != null) {
+                  if (username.isNotEmpty &&
+                      name.isNotEmpty &&
+                      surname.isNotEmpty &&
+                      email.isNotEmpty &&
+                      password.isNotEmpty) {
+                    onClick(context, username, name, surname, email, password);
                   } else {
-                    print('ingrese algun usuario y contraseña');
+                    print('complete todos los campos');
                   }
                 } else {
-                  print('ingrese algun usuario y contraseña');
+                  print('complete todos los campos');
                 }
               },
             ),

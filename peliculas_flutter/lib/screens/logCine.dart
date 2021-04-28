@@ -15,13 +15,4 @@ class _LogCineState extends State<LogCine> {
   }
 }
 
-void entrar() async {
-  try {
-    String url = 'http://localhost/logUser$username#$password';
-    Uri link = Uri.parse(url_get_movies);
-    var respuesta = await http.get(link);
-    print(respuesta.statusCode);
-  } catch (e) {
-    print(e);
-  }
-}
+void entrar() async {}

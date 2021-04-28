@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "818696095099",
+    "project_id": "reto-flutter-java",
+    "storage_bucket": "reto-flutter-java.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818696095099:android:5f04bb9de1b31a26d829de",
+        "android_client_info": {
+          "package_name": "applearningflutter.peliculas_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818696095099-lnpt1pghhim8fp56sm19k6m4m9s4n8dr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKMgrMP6cB6oxPVwdY-uxMDLAmbpSyar4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818696095099-lnpt1pghhim8fp56sm19k6m4m9s4n8dr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

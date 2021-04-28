@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>818696095099-hu4nkd1tuate8grmlmsd4r1vmdmhe00n.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.818696095099-hu4nkd1tuate8grmlmsd4r1vmdmhe00n</string>
+	<key>API_KEY</key>
+	<string>AIzaSyD4j2LbojcTQ7hJLilf0YOxRV5WCfWbHLQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>818696095099</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>applearningflutter.peliculasFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>reto-flutter-java</string>
+	<key>STORAGE_BUCKET</key>
+	<string>reto-flutter-java.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:818696095099:ios:9979010801b9f7e1d829de</string>
+</dict>
+</plist>
