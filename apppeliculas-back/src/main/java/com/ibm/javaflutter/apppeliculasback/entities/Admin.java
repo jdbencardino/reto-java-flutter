@@ -14,8 +14,7 @@ import javax.persistence.*;
 
 public class Admin extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="id")
+//    private long id;
 }

@@ -15,15 +15,14 @@ import java.util.Set;
 
 public class Cinema extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name="id")
+//    private long id;
 
     @Column(name = "web")
     private String web;
 
-    @Column(name = "adress")
+    @Column(name = "address")
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cinema")

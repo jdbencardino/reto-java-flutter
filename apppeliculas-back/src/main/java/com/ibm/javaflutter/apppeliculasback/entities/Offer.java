@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name="offer")
@@ -25,10 +24,10 @@ public class Offer {
     @Column(name="deadline")
     private Date deadline;
 
-    @Column(name="addPoints")
+    @Column(name="add_points")
     private int addPoints;
 
-    @Column(name="subPoints")
+    @Column(name="sub_points")
     private int subPoints;
 
     @ManyToOne
