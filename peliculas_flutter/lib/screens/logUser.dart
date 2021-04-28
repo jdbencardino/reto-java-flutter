@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 import 'package:peliculas_flutter/constantes.dart';
@@ -17,10 +19,18 @@ class _LogUserState extends State<LogUser> {
 
 void entrar() async {
   try {
-    String url = 'http://localhost/logUser$username#$password';
-    Uri link = Uri.parse(url_get_movies);
+    String url2 = 'http://localhost/logUser$username#$password';
+    String url =
+        'http://localhost:8080/users/search/findByUsernameAndPassword?username=$username&password=$password';
+    Uri link = Uri.parse(url);
     var respuesta = await http.get(link);
-    print(respuesta.statusCode);
+    // var users = jsonDecode(respuesta.body)['_embedded']['users'] as Map<String, dynamic>;
+
+    if (jsonDecode(respuesta.body)['_embedded']['users'].length != 0) {
+      print('YEIII');
+    } else {
+      print('Ohh nooooo');
+    }
   } catch (e) {
     print(e);
   }
