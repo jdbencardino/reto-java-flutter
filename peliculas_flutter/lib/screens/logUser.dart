@@ -1,11 +1,12 @@
 import 'dart:convert';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class LogUser extends StatefulWidget {
   @override
@@ -14,49 +15,43 @@ class LogUser extends StatefulWidget {
 
 class _LogUserState extends State<LogUser> {
   @override
+  void initState() {
+    Firebase.initializeApp();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return basedLoginWidget('Log User', context, onClick);
   }
 }
 
 void onClick(context, email, password) async {
-  //Firebase.initializeApp();
   FirebaseAuth _auth = FirebaseAuth.instance;
-
-  if (await _auth.currentUser != null) {
-    print(await _auth.currentUser.getIdTokenResult());
-  } else {
-    print('pailas');
-  }
 
   try {
     final mAuth = await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
+
     if (mAuth != null) {
-      //Navigator.pushNamed(context, ChatScreen.id);
-      print('usuario logueado');
-    }
-  } catch (e) {
-    print(e);
-  }
+      String url = 'http://localhost:8080/users';
+      Uri link = Uri.parse(url);
+      var respuesta = await http.get(
+        link,
+        headers: {'Content-Type': 'application/json'},
+      );
 
-  print('felicidades');
+      respuesta.statusCode < 400
+          ? Navigator.pushNamed(context, mainScreenInside)
+          : print('Error + ${respuesta.statusCode}');
 
-  try {
-    String url2 = 'http://localhost/logUser$email#$password';
-    String url =
-        'http://localhost:8080/users/search/findByUsernameAndPassword?username=$email&password=$password';
-    Uri link = Uri.parse(url);
-    var respuesta = await http.get(link);
-    // var users = jsonDecode(respuesta.body)['_embedded']['users'] as Map<String, dynamic>;
-
-    if (jsonDecode(respuesta.body)['_embedded']['users'].length != 0) {
-      //print('YEIII');
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('email', _auth.currentUser.email);
+      prefs.setString('uid', _auth.currentUser.uid);
+      prefs.setString('accessLevel', 'Usuario');
       Navigator.pushNamed(context, mainScreenInside);
-    } else {
-      //print('Ohh nooooo');
     }
   } catch (e) {
     print(e);

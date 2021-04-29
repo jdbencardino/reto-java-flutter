@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 import 'package:peliculas_flutter/constantes.dart';
-import 'package:http/http.dart' as http;
-import 'package:peliculas_flutter/screens/logCine.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class LogAdmin extends StatefulWidget {
   @override
@@ -11,9 +12,34 @@ class LogAdmin extends StatefulWidget {
 
 class _LogAdminState extends State<LogAdmin> {
   @override
+  void initState() {
+    Firebase.initializeApp();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return basedLoginWidget('Log admin', context, entrar);
+    return basedLoginWidget('Log admin', context, onClick);
   }
 }
 
-void entrar() async {}
+void onClick(context, email, password) async {
+  //Firebase.initializeApp();
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  try {
+    final mAuth = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    if (mAuth != null) {
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('email', _auth.currentUser.email);
+      prefs.setString('uid', _auth.currentUser.uid);
+      prefs.setString('accesLevel', 'Administrador');
+      Navigator.pushNamed(context, mainScreenInside);
+    }
+  } catch (e) {
+    print(e);
+  }
+}

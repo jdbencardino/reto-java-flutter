@@ -2,7 +2,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas_flutter/offDatabase.dart';
+import 'package:peliculas_flutter/screens/mainScreen.dart';
+
+String _keyWord;
+List<ListTile> _list = [];
+
+ListTile listTile(String value) {
+  return ListTile(
+    title: Text(value),
+  );
+}
 
 class NoRegUsScreen extends StatefulWidget {
   @override
@@ -19,9 +28,8 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
         primarySwatch: Colors.teal,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Peliculas disponibles')),
-        body: BodyLayout(),
-      ),
+          appBar: AppBar(title: Text('Peliculas disponibles')),
+          body: BodyLayout()),
     );
   }
 }
@@ -41,14 +49,6 @@ class BodyLayout extends StatelessWidget {
     );
   }
 }
-
-ListTile listTile(String value) {
-  return ListTile(
-    title: Text(value),
-  );
-}
-
-List<ListTile> _list = [];
 
 Future _myList() async {
   _list.clear();
@@ -80,8 +80,29 @@ Future _myList() async {
 }
 
 Widget _myListView() {
-  return ListView(
+  return Column(
     children: <Widget>[
+      Center(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(15),
+                child: TextField(
+                  onChanged: (value) {
+                    _keyWord = value;
+                  },
+                ),
+              ),
+              FloatingActionButton(
+                onPressed: () {
+                  print('...taca');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       ..._list,
     ],
   );

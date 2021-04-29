@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_flutter/screens/logAdmin.dart';
+import 'package:peliculas_flutter/screens/logCine.dart';
 import 'package:peliculas_flutter/screens/regUser.dart';
 import 'screens/mainScreen.dart';
 import 'screens/noRegUsScreen.dart';
@@ -18,6 +20,8 @@ MaterialApp materialApp = MaterialApp(
     noRegUsScreen: (context) => NoRegUsScreen(),
     mainScreenInside: (context) => MainScreenInside(),
     logUser: (context) => LogUser(),
+    logCine: (context) => LogCine(),
+    logAdmin: (context) => LogAdmin(),
     regUser: (context) => RegUser()
   },
 );
@@ -33,6 +37,8 @@ class MyApp extends StatelessWidget {
         noRegUsScreen: (context) => NoRegUsScreen(),
         mainScreenInside: (context) => MainScreenInside(),
         logUser: (context) => LogUser(),
+        logCine: (context) => LogCine(),
+        logAdmin: (context) => LogAdmin(),
         regUser: (context) => RegUser()
       },
     );
