@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-Widget basedLoginWidget(
+Widget kBasedLoginWidget(
     String title, BuildContext context, @required Function onClick) {
   String username, password;
 
@@ -75,7 +75,7 @@ Widget basedLoginWidget(
   );
 }
 
-Widget basedRegisterWidget(
+Widget kBasedRegisterWidget(
     String title, BuildContext context, @required Function onClick) {
   String username, name, surname, email, password;
 
@@ -160,6 +160,70 @@ Widget basedRegisterWidget(
             ),
           ],
         ),
+      ),
+    ),
+  );
+}
+
+Future<void> kShowMyDialogMovie(title, id, _MyContext) async {
+  return showDialog<void>(
+    context: _MyContext,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('$title'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              FloatingActionButton(
+                child: const Icon(Icons.play_arrow),
+                onPressed: () {
+                  print('lets to see the movie! $title');
+                },
+              ),
+              kFlatButtonMovie('Views', id),
+              kFlatButtonMovie('To see', id),
+              kFlatButtonMovie('Favorite', id),
+              kFlatButtonMovie('Available cinema', id)
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Cerrar'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Widget kFlatButtonMovie(String title, String id) {
+  return FlatButton(
+    padding: EdgeInsets.all(8),
+    child: Text(title),
+    onPressed: () {},
+  );
+}
+
+Widget kWidget(
+    String titulo, String descripcion, String date, @required Function fn) {
+  return GestureDetector(
+    onTap: fn,
+    child: Container(
+      padding: EdgeInsets.all(15),
+      child: Column(
+        children: <Widget>[
+          Text(
+            titulo,
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(descripcion),
+          Text(date),
+        ],
       ),
     ),
   );
