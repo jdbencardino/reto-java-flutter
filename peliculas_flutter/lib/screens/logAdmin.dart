@@ -19,7 +19,7 @@ class _LogAdminState extends State<LogAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    return basedLoginWidget('Log admin', context, onClick);
+    return kBasedLoginWidget('Log admin', context, onClick);
   }
 }
 

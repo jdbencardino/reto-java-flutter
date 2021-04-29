@@ -22,7 +22,7 @@ class _LogUserState extends State<LogUser> {
 
   @override
   Widget build(BuildContext context) {
-    return basedLoginWidget('Log User', context, onClick);
+    return kBasedLoginWidget('Log User', context, onClick);
   }
 }
 

@@ -16,7 +16,7 @@ class RegUser extends StatefulWidget {
 class _RegUserState extends State<RegUser> {
   @override
   Widget build(BuildContext context) {
-    return basedRegisterWidget('Reg User', context, onClick);
+    return kBasedRegisterWidget('Reg User', context, onClick);
   }
 }
 
