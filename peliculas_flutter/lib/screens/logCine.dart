@@ -21,7 +21,7 @@ class _LogCineState extends State<LogCine> {
 
   @override
   Widget build(BuildContext context) {
-    return basedLoginWidget('Log Cine', context, onClick);
+    return kBasedLoginWidget('Log Cine', context, onClick);
   }
 }
 
