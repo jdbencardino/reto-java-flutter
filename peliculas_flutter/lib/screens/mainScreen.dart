@@ -73,13 +73,14 @@ class _bodyLayoutState extends State<bodyLayout> {
           ),
           expandedTextButton(() {
             setState(() {
-              Navigator.pushNamed(context, mainScreenInside);
+              Navigator.pushNamed(context, logCine);
               // todo reg
             });
           }, 'Entrada como cine'),
           expandedTextButton(() {
             setState(() {
-              httpUpdate();
+              //httpUpdate();
+              Navigator.pushNamed(context, logAdmin);
             });
           }, 'Entrada como administrador'),
         ],
