@@ -4,8 +4,11 @@ import com.google.api.core.ApiFuture;
 import com.google.common.base.Strings;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
+import com.ibm.javaflutter.apppeliculasback.services.SecurityService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,23 +22,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
-//    @Autowired
-//    private SecurityService securityService;
-
-//    private FirebaseConfig
+    @Autowired
+    private SecurityService securityService;
 
     private static final Logger logger = LoggerFactory.getLogger(FirebaseAuthenticationTokenFilter.class);
-    private static final String TOKEN_HEADER = "Authorization";
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
         logger.debug("doFilter:: authenticating...");
+        logger.info("doFilter:: authenticating... x2");
 
         HttpServletRequest httprequest = httpServletRequest;
-        String authToken = httprequest.getHeader(TOKEN_HEADER);
+        String authToken = securityService.getBearerToken(httprequest);
 
         if(Strings.isNullOrEmpty(authToken)) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
@@ -45,10 +47,12 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
         try{
             Authentication authentication = getAndValidateAuthentication(authToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
             logger.debug("doFilter():: Succesfully Authenticated!");
         } catch (Exception ex) {
             HttpServletResponse httpResponse = httpServletResponse;
             httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            httpResponse.getWriter().write("NOT AUTHORIZED");
             logger.debug("Fail to authenticate.", ex);
         }
     }
