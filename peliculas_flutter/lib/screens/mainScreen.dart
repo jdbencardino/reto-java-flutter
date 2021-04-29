@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
+import 'package:http/http.dart' as http;
 
 class MainScreen extends StatefulWidget {
   @override
@@ -76,11 +79,26 @@ class _bodyLayoutState extends State<bodyLayout> {
           }, 'Entrada como cine'),
           expandedTextButton(() {
             setState(() {
-              // todo reg
+              httpUpdate();
             });
           }, 'Entrada como administrador'),
         ],
       )),
     );
   }
+}
+
+void httpUpdate() async {
+  String id = '1';
+  Uri url = Uri.parse('http://localhost:8080/users/$id');
+  var response = await http.patch(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode(
+      <Object, Object>{
+        "username": "juan2",
+      },
+    ),
+  );
+  print(response.body);
 }

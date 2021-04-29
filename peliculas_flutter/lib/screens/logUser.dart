@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 import 'package:peliculas_flutter/constantes.dart';
@@ -19,7 +20,14 @@ class _LogUserState extends State<LogUser> {
 }
 
 void onClick(context, email, password) async {
+  //Firebase.initializeApp();
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+  if (await _auth.currentUser != null) {
+    print(await _auth.currentUser.getIdTokenResult());
+  } else {
+    print('pailas');
+  }
 
   try {
     final mAuth = await _auth.signInWithEmailAndPassword(
@@ -29,7 +37,7 @@ void onClick(context, email, password) async {
     if (mAuth != null) {
       //Navigator.pushNamed(context, ChatScreen.id);
       print('usuario logueado');
-    } else {}
+    }
   } catch (e) {
     print(e);
   }
