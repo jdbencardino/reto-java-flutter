@@ -1,44 +1,41 @@
 package com.ibm.javaflutter.apppeliculasback.config;
 
+import com.ibm.javaflutter.apppeliculasback.filters.FirebaseAuthenticationTokenFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    @Bean
-//    public AuthenticationEntryPoint restAuthenticationEntryPoint() {
-//        return new AuthenticationEntryPoint() {
-//            @Override
-//            public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-//                                 AuthenticationException e) throws IOException, ServletException {
-//                Map<String, Object> errorObject = new HashMap<String, Object>();
-//                int errorCode = 401;
-//                errorObject.put("message", "Unauthorized access of protected resource, invalid credentials");
-//                errorObject.put("error", HttpStatus.UNAUTHORIZED);
-//                errorObject.put("code", errorCode);
-//                errorObject.put("timestamp", new Timestamp(new Date().getTime()));
-//                httpServletResponse.setContentType("application/json;charset=UTF-8");
-//                httpServletResponse.setStatus(errorCode);
-//                httpServletResponse.getWriter().write(objectMapper.writeValueAsString(errorObject));
-//            }
-//        };
-//    }
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
+
+    public FirebaseAuthenticationTokenFilter firebaseAuthenticationTokenFilterBean() throws Exception {
+        logger.debug("firebaseAuthenticationFilter():: creating instance of FirebaseAuthenticationTokenFilter.");
+
+        FirebaseAuthenticationTokenFilter authenticationTokenFilter = new FirebaseAuthenticationTokenFilter();
+
+        return authenticationTokenFilter;
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // protect endpoint /offers
         http.authorizeRequests()
                 .antMatchers("/actors/**")
-                .authenticated();
-//                .and()
-//                .oauth2ResourceServer()
-//                .jwt();
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-//        http.addFilterBefore()
+        http.addFilterBefore(firebaseAuthenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         // add CORS filters
         http.cors();
