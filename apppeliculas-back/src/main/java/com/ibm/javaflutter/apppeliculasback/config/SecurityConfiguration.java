@@ -34,8 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/actors/**")
                 .authenticated();
+//                .and()
+//                .oauth2ResourceServer()
+//                .jwt();
 
-//        http.authorizeRequests().
+//        http.addFilterBefore()
 
         // add CORS filters
         http.cors();

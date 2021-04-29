@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByUsernameAndPassword(@RequestParam("usr") String username, @RequestParam("pwd") String password);
+    List<User> findByUid(@RequestParam("uid") String uid);
 }
