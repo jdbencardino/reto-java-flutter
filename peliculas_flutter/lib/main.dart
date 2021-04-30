@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas_flutter/providers/lista_films.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import 'package:http/http.dart';
-import 'package:peliculas_flutter/httpRequest.dart';
-import 'package:peliculas_flutter/screens/logAdmin.dart';
-import 'package:peliculas_flutter/screens/logCine.dart';
-import 'package:peliculas_flutter/screens/regUser.dart';
+import 'providers/lista_films.dart';
+import 'screens/logAdmin.dart';
+import 'screens/logCine.dart';
+import 'screens/regUser.dart';
 import 'screens/mainScreen.dart';
 import 'screens/noRegUsScreen.dart';
 import 'screens/mainScreenInside.dart';
-import 'helpers/constantes.dart';
 import 'screens/logUser.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'helpers/constantes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +40,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    isUser();
+    // isUser();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(

@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
-import 'noRegUsScreen.dart';
-import 'package:peliculas_flutter/itemsScreen/user.dart';
-import 'package:peliculas_flutter/constantes.dart';
-import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
+
+import './itemsScreen/itemsUser.dart';
+import '../widgets/basedWidgets.dart';
 
 String mainTitle = 'Principal';
 
@@ -100,5 +98,3 @@ Widget _getWidgetItemSelected(int pos) {
       return Container();
   }
 }
-
-Future<Suscriber> getCompleteUser(uid) async {}

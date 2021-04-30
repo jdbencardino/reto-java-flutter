@@ -1,9 +1,11 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
-import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'constantes.dart';
 import 'package:flutter/material.dart';
+
+import './screens/itemsScreen/suscriber.dart';
+import './helpers/constantes.dart';
 
 void httpSetFilm(idUser, idFilm, type) async {
   try {
@@ -68,8 +70,15 @@ Future<void> userType() async {
 
     //print('$id');
 
-    user_suscriber = await Suscriber(
-        id, username, uid, name, surname, email, points, 'Usuario', 'NA', 'NA');
+    var user_suscriber = new Suscriber(
+      id,
+      username,
+      uid,
+      name,
+      surname,
+      email,
+      points,
+    );
   }
 }
 
