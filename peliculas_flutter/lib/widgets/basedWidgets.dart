@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:peliculas_flutter/constantes.dart';
+import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:peliculas_flutter/itemsScreen/suscriber.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/httpRequest.dart';

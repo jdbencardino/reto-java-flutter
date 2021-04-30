@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas_flutter/itemsScreen/suscriber.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 void httpSetFilm(idUser, idFilm, type) async {

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:peliculas_flutter/itemsScreen/itemsUser.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'noRegUsScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -90,7 +90,8 @@ Widget _getWidgetItemSelected(int pos) {
     case 0:
       return null;
     case 1:
-      return BodyLayout();
+      // TODO check where is Bodylayout()
+      return null;
     case 2:
       return MiPerfil();
     case 3:

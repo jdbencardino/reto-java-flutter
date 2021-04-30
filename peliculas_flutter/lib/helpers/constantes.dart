@@ -5,6 +5,7 @@ const String url_get_movie_from_title =
     'http://localhost:8080/films/search/findByTitleContaining?title=';
 
 //Rutas de navegacion
+// TODO remover esto
 const String mainScreenId = '/';
 const String noRegUsScreen = '/noRegUsScreen';
 const String mainScreenInside = '/mainScreenInside';
