@@ -4,10 +4,14 @@ import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas_flutter/screens/mainScreen.dart';
 import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:peliculas_flutter/brain.dart';
 
 String _keyWord;
 List<Widget> _list = [];
 BuildContext _context;
+String urlDesigned = url_get_movies;
+var isUser;
 
 ListTile listTile(String value) {
   return ListTile(
@@ -21,12 +25,6 @@ class NoRegUsScreen extends StatefulWidget {
 }
 
 class _NoRegUsScreenState extends State<NoRegUsScreen> {
-  @override
-  void initState() {
-    if (_list != null) _list.clear();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     _context = context;
@@ -49,14 +47,19 @@ class BodyLayout extends StatefulWidget {
 }
 
 class _BodyLayoutState extends State<BodyLayout> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future _myList(url) async {
     _list.clear();
     try {
       Uri link = Uri.parse(url);
+      print(url);
       var respuesta = await http.get(link);
       var temp =
           jsonDecode(respuesta.body)['_embedded']['films'] as List<dynamic>;
-      //_list = jsonDecode(respuesta.body)['_embedded']['films'];
       for (int i = 0; i < temp.length; i++) {
         _list.add(
           kWidget(
@@ -64,8 +67,12 @@ class _BodyLayoutState extends State<BodyLayout> {
             temp[i]['description'],
             temp[i]['date'],
             () {
-              kShowMyDialogMovie(
-                  temp[i]['title'], temp[i]['id'].toString(), _context);
+              String val;
+
+              if (isUser != null) {
+                kShowMyDialogMovie(
+                    temp[i]['title'], temp[i]['id'].toString(), _context);
+              }
             },
           ),
         );
@@ -73,46 +80,14 @@ class _BodyLayoutState extends State<BodyLayout> {
       return _list;
     } catch (e) {
       print(e);
-      _list.clear();
       return _list;
     }
   }
 
-  Widget _myListView() {
-    return Column(
-      children: <Widget>[
-        Center(
-          child: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(15),
-                  child: TextField(
-                    onChanged: (value) {
-                      _keyWord = value;
-                    },
-                  ),
-                ),
-                FloatingActionButton(
-                  child: Icon(Icons.search),
-                  onPressed: () {
-                    setState(() {
-                      _myList('$url_get_movie_from_title$_keyWord');
-                    });
-                  },
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child: Column(
-                    children: <Widget>[..._list],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
+  Future<void> callDialog(key) async {
+    await getIdFromShared(key).then((value) {
+      isUser = value;
+    });
   }
 
   @override
@@ -123,9 +98,47 @@ class _BodyLayoutState extends State<BodyLayout> {
             projectSnap.hasData == null) {
           return Container();
         }
-        return _myListView();
+        return kMyListView(() {
+          setState(() {
+            urlDesigned = '$url_get_movie_from_title$_keyWord';
+          });
+        });
       },
-      future: _myList(url_get_movies),
+      future: _myList(urlDesigned),
     );
   }
+}
+
+Widget kMyListView(@required onClick) {
+  return Column(
+    children: <Widget>[
+      Center(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(15),
+                child: TextField(
+                  onChanged: (value) {
+                    _keyWord = value;
+                    //print(_keyWord);
+                  },
+                ),
+              ),
+              FloatingActionButton(
+                child: Icon(Icons.search),
+                onPressed: onClick,
+              ),
+              Container(
+                padding: EdgeInsets.all(5),
+                child: Column(
+                  children: <Widget>[..._list],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
 }

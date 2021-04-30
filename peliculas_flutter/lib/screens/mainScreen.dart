@@ -88,18 +88,3 @@ class _bodyLayoutState extends State<bodyLayout> {
     );
   }
 }
-
-void httpUpdate() async {
-  String id = '1';
-  Uri url = Uri.parse('http://localhost:8080/users/$id');
-  var response = await http.patch(
-    url,
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode(
-      <Object, Object>{
-        "username": "juan2",
-      },
-    ),
-  );
-  print(response.body);
-}

@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:peliculas_flutter/httpRequest.dart';
+import 'package:peliculas_flutter/brain.dart';
 
 Widget kBasedLoginWidget(
     String title, BuildContext context, @required Function onClick) {
@@ -201,11 +204,13 @@ Future<void> kShowMyDialogMovie(title, id, _MyContext) async {
   );
 }
 
-Widget kFlatButtonMovie(String title, String id) {
+Widget kFlatButtonMovie(title, id) {
   return FlatButton(
     padding: EdgeInsets.all(8),
     child: Text(title),
-    onPressed: () {},
+    onPressed: () {
+      httpSetFilm(getIdFromShared('id'), id, title);
+    },
   );
 }
 

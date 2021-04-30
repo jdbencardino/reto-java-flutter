@@ -22,11 +22,11 @@ class _LogUserState extends State<LogUser> {
 
   @override
   Widget build(BuildContext context) {
-    return kBasedLoginWidget('Log User', context, onClick);
+    return kBasedLoginWidget('Log User', context, onClickLog);
   }
 }
 
-void onClick(context, email, password) async {
+void onClickLog(context, email, password) async {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   try {
@@ -43,14 +43,12 @@ void onClick(context, email, password) async {
         headers: {'Content-Type': 'application/json'},
       );
 
-      respuesta.statusCode < 400
-          ? Navigator.pushNamed(context, mainScreenInside)
-          : print('Error + ${respuesta.statusCode}');
-
       final prefs = await SharedPreferences.getInstance();
-      prefs.setString('email', _auth.currentUser.email);
-      prefs.setString('uid', _auth.currentUser.uid);
-      prefs.setString('accessLevel', 'Usuario');
+      prefs.setString(userName, _auth.currentUser.displayName);
+      prefs.setString(userEmail, _auth.currentUser.email);
+      prefs.setString(userId, _auth.currentUser.uid);
+      prefs.setString(userAccessLevel, 'Suscriptor');
+      print(jsonDecode(respuesta.body));
       Navigator.pushNamed(context, mainScreenInside);
     }
   } catch (e) {

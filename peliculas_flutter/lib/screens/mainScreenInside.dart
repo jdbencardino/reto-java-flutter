@@ -7,20 +7,45 @@ import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas_flutter/itemsScreen/itemsUser.dart';
+import 'noRegUsScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:peliculas_flutter/brain.dart';
 
 class MainScreenInside extends StatefulWidget {
   @override
   _MainScreenInsideState createState() => _MainScreenInsideState();
 }
 
-String username = 'Cristian';
-String accessLevel = 'Usuario';
+int _pos = 0;
 
-int pos = 0;
+//String _userName, _accessLevel, _id;
 
 class _MainScreenInsideState extends State<MainScreenInside> {
   @override
   Widget build(BuildContext context) {
+    //callDialog(userAccessLevel);
+    //callDialog(userName);
+    //callDialog(userId);
+    return willPopScope();
+  }
+
+  /* Future<void> callDialog(key) async {
+    await getIdFromShared(key).then((value) {
+      switch (key) {
+        case 'accessLevel':
+          _accessLevel = value;
+          break;
+        case 'userName':
+          _userName = value;
+          break;
+        case 'id':
+          _id = value;
+          break;
+      }
+    });
+  }*/
+
+  Widget willPopScope() {
     return WillPopScope(
       onWillPop: () {
         SystemNavigator.pop();
@@ -33,8 +58,8 @@ class _MainScreenInsideState extends State<MainScreenInside> {
           child: ListView(
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text(username),
-                accountEmail: Text(accessLevel),
+                accountName: Text('username'),
+                accountEmail: Text('access'),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Text(
@@ -43,61 +68,36 @@ class _MainScreenInsideState extends State<MainScreenInside> {
                   ),
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.home_rounded),
-                title: Text('Principal'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    pos = 0;
-                  });
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.search),
-                title: Text('Buscar peliculas'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    pos = 1;
-                  });
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.person),
-                title: Text('Mi perfil'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    pos = 2;
-                  });
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.close),
-                title: Text('Salir'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    pos = 3;
-                  });
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.announcement_outlined),
-                title: Text('Acerca de la app'),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  setState(() {
-                    print('si pasa');
-                    pos = 4;
-                  });
-                },
-              ),
+              listTitle(context, Icons.home_rounded, 'Principal', () {
+                setState(() {
+                  _pos = 0;
+                });
+              }),
+              listTitle(context, Icons.search, 'Buscar peliculas', () {
+                setState(() {
+                  _pos = 1;
+                });
+              }),
+              listTitle(context, Icons.person, 'Mi perfil', () {
+                setState(() {
+                  _pos = 2;
+                });
+              }),
+              listTitle(context, Icons.home_rounded, 'Salir', () {
+                setState(() {
+                  _pos = 3;
+                });
+              }),
+              listTitle(
+                  context, Icons.announcement_outlined, 'Acerca de la app', () {
+                setState(() {
+                  _pos = 4;
+                });
+              }),
             ],
           ),
         ),
-        body: _getWidgetItemSelected(pos),
+        body: _getWidgetItemSelected(_pos),
       ),
     );
   }
@@ -108,7 +108,7 @@ Widget _getWidgetItemSelected(int pos) {
     case 0:
       return miPerfil('pricipal');
     case 1:
-      return miPerfil('buscar movie');
+      return NoRegUsScreen();
     case 2:
       return miPerfil('mi perfil');
     case 3:
@@ -118,6 +118,17 @@ Widget _getWidgetItemSelected(int pos) {
     default:
       return Container();
   }
+}
+
+Widget listTitle(context, icon, title, @required onClick) {
+  return ListTile(
+    leading: Icon(icon),
+    title: Text(title),
+    onTap: () {
+      Navigator.of(context).pop();
+      onClick;
+    },
+  );
 }
 
 Widget listTitleAddMore(var icon, String title, @required Function onClick) {
