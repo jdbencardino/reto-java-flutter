@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
-import 'package:peliculas_flutter/constantes.dart';
+import 'package:peliculas_flutter/widgets/basedWidgets.dart';
+import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';

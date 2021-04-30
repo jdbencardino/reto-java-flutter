@@ -1,14 +1,13 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:peliculas_flutter/constantes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:peliculas_flutter/screens/logUser.dart';
-import 'package:peliculas_flutter/screens/noRegUsScreen.dart';
 
-BuildContext _context;
+import 'package:peliculas_flutter/helpers/constantes.dart';
+import '../widgets/expanded_text_button.dart';
 
 class MainScreen extends StatefulWidget {
+  static const routeName = '/';
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -16,7 +15,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
@@ -33,21 +31,6 @@ class bodyLayout extends StatefulWidget {
 }
 
 class _bodyLayoutState extends State<bodyLayout> {
-  Container expandedTextButton(@required Function fn, @required String title) {
-    return Container(
-      padding: EdgeInsets.all(5),
-      child: TextButton(
-        style: TextButton.styleFrom(
-          primary: Colors.white,
-          backgroundColor: Colors.blueAccent,
-          onSurface: Colors.grey,
-        ),
-        onPressed: fn,
-        child: Text(title),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -56,21 +39,31 @@ class _bodyLayoutState extends State<bodyLayout> {
           child: Center(
             child: Column(
               children: <Widget>[
-                expandedTextButton(() {
-                  Navigator.pushNamed(context, noRegUsScreen);
-                }, 'Ver los titulos disponibles'),
-                expandedTextButton(() {
-                  Navigator.pushNamed(context, regUser);
-                }, 'Registrate'),
-                expandedTextButton(() {
-                  Navigator.pushNamed(context, logUser);
-                }, 'Entrar'),
-                expandedTextButton(() {
-                  Navigator.pushNamed(context, logCine);
-                }, 'Entrar como cine'),
-                expandedTextButton(() {
-                  Navigator.pushNamed(context, logAdmin);
-                }, 'Entrar como administrador'),
+                ExpandedTextButton(
+                    fn: () {
+                      Navigator.pushNamed(context, noRegUsScreen);
+                    },
+                    title: 'Ver los titulos disponibles'),
+                ExpandedTextButton(
+                    fn: () {
+                      Navigator.pushNamed(context, regUser);
+                    },
+                    title: 'Registrate'),
+                ExpandedTextButton(
+                    fn: () {
+                      Navigator.pushNamed(context, logUser);
+                    },
+                    title: 'Entrar'),
+                ExpandedTextButton(
+                    fn: () {
+                      Navigator.pushNamed(context, logCine);
+                    },
+                    title: 'Entrar como cine'),
+                ExpandedTextButton(
+                    fn: () {
+                      Navigator.pushNamed(context, logAdmin);
+                    },
+                    title: 'Entrar como administrador'),
               ],
             ),
           )),

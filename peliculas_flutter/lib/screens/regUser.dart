@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
-import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
+import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas_flutter/constantes.dart';
+import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:peliculas_flutter/screens/logUser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
