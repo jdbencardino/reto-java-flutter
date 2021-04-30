@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/screens/logAdmin.dart';
 import 'package:peliculas_flutter/screens/logCine.dart';
 import 'package:peliculas_flutter/screens/regUser.dart';
@@ -7,13 +8,15 @@ import 'screens/noRegUsScreen.dart';
 import 'screens/mainScreenInside.dart';
 import 'constantes.dart';
 import 'screens/logUser.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-// inicia la aplicacion
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
-// construlle un objeto tipo MaterialApp
 MaterialApp materialApp = MaterialApp(
   routes: {
     mainScreenId: (context) => MainScreen(),
@@ -26,12 +29,35 @@ MaterialApp materialApp = MaterialApp(
   },
 );
 
-// construye el enrutador y el Widget sin estado
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String initialRouteX = mainScreenId;
+
+  void isUser() {
+    try {
+      FirebaseAuth.instance.authStateChanges().listen((User user) {
+        if (user == null) {
+          print('User is currently signed out!');
+          initialRouteX = mainScreenId;
+        } else {
+          initialRouteX = mainScreenInside;
+          print('User is signed in!');
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    isUser();
     return MaterialApp(
-      initialRoute: mainScreenId,
+      initialRoute: initialRouteX,
       routes: {
         mainScreenId: (context) => MainScreen(),
         noRegUsScreen: (context) => NoRegUsScreen(),

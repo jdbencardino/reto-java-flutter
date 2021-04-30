@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas_flutter/itemsScreen/suscriber.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void httpSetFilm(idUser, idFilm, type) async {
   try {
@@ -18,17 +21,26 @@ void httpSetFilm(idUser, idFilm, type) async {
   }
 }
 
-void httpUpdate() async {
-  String id = '1';
+void httpUpdate(id, key, data) async {
   Uri url = Uri.parse('http://localhost:8080/users/$id');
   var response = await http.patch(
     url,
     headers: {'Content-Type': 'application/json'},
     body: jsonEncode(
       <Object, Object>{
-        "username": "juan2",
+        key: data,
       },
     ),
   );
-  print(response.body);
+  print(response.statusCode);
+}
+
+String getUid() {
+  Firebase.initializeApp();
+  FirebaseAuth mAuth = FirebaseAuth.instance;
+  if (mAuth != null) {
+    return mAuth.currentUser.uid;
+  } else {
+    return null;
+  }
 }

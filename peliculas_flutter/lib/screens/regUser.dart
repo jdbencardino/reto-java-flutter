@@ -9,6 +9,8 @@ import 'package:peliculas_flutter/constantes.dart';
 import 'package:peliculas_flutter/screens/logUser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+BuildContext _context;
+
 class RegUser extends StatefulWidget {
   @override
   _RegUserState createState() => _RegUserState();
@@ -16,19 +18,15 @@ class RegUser extends StatefulWidget {
 
 class _RegUserState extends State<RegUser> {
   @override
-  void initState() {
-    Firebase.initializeApp();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    _context = context;
     return kBasedRegisterWidget('Reg User', context, onClick);
   }
 }
 
 void onClick(context, username, name, surname, email, password) async {
-  Firebase.initializeApp();
+  context = _context;
+  await Firebase.initializeApp();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   try {
@@ -37,30 +35,29 @@ void onClick(context, username, name, surname, email, password) async {
       password: password,
     );
     if (newUSer != null) {
-      try {
-        String url = 'http://localhost:8080/users';
-        Uri link = Uri.parse(url);
-        String uid = newUSer.user.uid;
-        print('$username | $name | $surname | $email | $password | $uid ');
-        var respuesta = await http.post(
-          link,
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            "username": "$username",
-            "uid": uid,
-            "name": "$name",
-            "surname": "$surname",
-            "email": "$email"
-          }),
-        );
+      String url = 'http://localhost:8080/subscribers';
+      Uri link = Uri.parse(url);
+      String uid = newUSer.user.uid;
+      print('$username | $name | $surname | $email | $password | $uid ');
+      var respuesta = await http.post(
+        link,
+        headers: {'content-Type': 'application/json'},
+        body: jsonEncode({
+          "username": "$username",
+          "uid": uid,
+          "email": email,
+          "name": "$name",
+          "surname": "$surname",
+          "points": "0"
+        }),
+      );
 
-        respuesta.statusCode < 400
-            ? onClickLog(context, email, password)
-            : print('Error + ${respuesta.statusCode}');
-      } catch (e) {
-        print(e);
+      if (respuesta.statusCode < 400) {
+        Navigator.pushNamed(context, mainScreenInside);
+      } else {
+        print('Error + ${respuesta.statusCode}');
       }
-    } else {}
+    }
   } catch (e) {
     print(e);
   }

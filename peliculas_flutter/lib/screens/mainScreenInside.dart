@@ -1,58 +1,36 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
-import 'package:peliculas_flutter/constantes.dart';
-import 'package:http/http.dart' as http;
 import 'package:peliculas_flutter/itemsScreen/itemsUser.dart';
 import 'noRegUsScreen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:peliculas_flutter/brain.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+String mainTitle = 'Principal';
 
 class MainScreenInside extends StatefulWidget {
   @override
   _MainScreenInsideState createState() => _MainScreenInsideState();
 }
 
-int _pos = 0;
-
-//String _userName, _accessLevel, _id;
-
 class _MainScreenInsideState extends State<MainScreenInside> {
+  int _pos = 0;
+  String title = 'Principal';
+
   @override
   Widget build(BuildContext context) {
-    //callDialog(userAccessLevel);
-    //callDialog(userName);
-    //callDialog(userId);
     return willPopScope();
   }
 
-  /* Future<void> callDialog(key) async {
-    await getIdFromShared(key).then((value) {
-      switch (key) {
-        case 'accessLevel':
-          _accessLevel = value;
-          break;
-        case 'userName':
-          _userName = value;
-          break;
-        case 'id':
-          _id = value;
-          break;
-      }
-    });
-  }*/
-
   Widget willPopScope() {
     return WillPopScope(
+      // ignore: missing_return
       onWillPop: () {
         SystemNavigator.pop();
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Home Screen'),
+          title: Text(mainTitle),
         ),
         drawer: Drawer(
           child: ListView(
@@ -70,16 +48,19 @@ class _MainScreenInsideState extends State<MainScreenInside> {
               ),
               listTitle(context, Icons.home_rounded, 'Principal', () {
                 setState(() {
+                  mainTitle = 'Principal';
                   _pos = 0;
                 });
               }),
               listTitle(context, Icons.search, 'Buscar peliculas', () {
                 setState(() {
+                  mainTitle = 'Peliculas disponibles';
                   _pos = 1;
                 });
               }),
               listTitle(context, Icons.person, 'Mi perfil', () {
                 setState(() {
+                  mainTitle = 'Mi perfil';
                   _pos = 2;
                 });
               }),
@@ -91,6 +72,7 @@ class _MainScreenInsideState extends State<MainScreenInside> {
               listTitle(
                   context, Icons.announcement_outlined, 'Acerca de la app', () {
                 setState(() {
+                  mainTitle = 'Acerca de la App';
                   _pos = 4;
                 });
               }),
@@ -106,15 +88,15 @@ class _MainScreenInsideState extends State<MainScreenInside> {
 Widget _getWidgetItemSelected(int pos) {
   switch (pos) {
     case 0:
-      return miPerfil('pricipal');
+      return null;
     case 1:
-      return NoRegUsScreen();
+      return BodyLayout();
     case 2:
-      return miPerfil('mi perfil');
+      return MiPerfil();
     case 3:
-      return miPerfil('salido');
+      return null; //miPerfil('salido');
     case 4:
-      return miPerfil('about');
+      return null; //miPerfil('about');
     default:
       return Container();
   }
@@ -126,17 +108,7 @@ Widget listTitle(context, icon, title, @required onClick) {
     title: Text(title),
     onTap: () {
       Navigator.of(context).pop();
-      onClick;
+      onClick();
     },
   );
 }
-
-Widget listTitleAddMore(var icon, String title, @required Function onClick) {
-  return ListTile(
-    leading: Icon(icon),
-    title: Text(title),
-    onTap: onClick,
-  );
-}
-
-void onClickOne() {}

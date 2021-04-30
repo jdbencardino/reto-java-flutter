@@ -13,7 +13,11 @@ const String logCine = '/logCine';
 const String logAdmin = '/logAdmin';
 const String regUser = '/regUser';
 
+const userUserName = "USERUSERNAME";
 const userName = 'USERNAME';
 const userId = 'USERID';
 const userAccessLevel = 'USERACCESSLEVEL';
 const userEmail = 'USEREMAIL';
+const userPoints = 'USEREMAIL';
+const userSurname = 'USEREMAIL';
+const userUid = 'USEREMAIL';

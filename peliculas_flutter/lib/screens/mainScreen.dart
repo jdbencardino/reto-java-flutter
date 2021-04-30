@@ -1,9 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
-import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:peliculas_flutter/screens/logUser.dart';
+import 'package:peliculas_flutter/screens/noRegUsScreen.dart';
+
+BuildContext _context;
 
 class MainScreen extends StatefulWidget {
   @override
@@ -13,7 +16,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return bodyLayout();
+    _context = context;
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        title: Text('App'),
+      ),
+      body: bodyLayout(),
+    );
   }
 }
 
@@ -22,69 +32,48 @@ class bodyLayout extends StatefulWidget {
   _bodyLayoutState createState() => _bodyLayoutState();
 }
 
-int cont = 0;
-
 class _bodyLayoutState extends State<bodyLayout> {
-  Expanded expandedTextButton(@required Function fn, @required String title) {
-    return Expanded(
-      child: Center(
-        child: Container(
-          height: 200,
-          width: double.infinity,
-          child: TextButton(
-            onPressed: () {
-              fn();
-            },
-            child: Text('$title'),
-          ),
+  Container expandedTextButton(@required Function fn, @required String title) {
+    return Container(
+      padding: EdgeInsets.all(5),
+      child: TextButton(
+        style: TextButton.styleFrom(
+          primary: Colors.white,
+          backgroundColor: Colors.blueAccent,
+          onSurface: Colors.grey,
         ),
+        onPressed: fn,
+        child: Text(title),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return material();
-  }
-
-  Material material() {
     return Material(
-      child: Center(
-          child: Column(
-        children: <Widget>[
-          expandedTextButton(() {
-            setState(() {
-              Navigator.pushNamed(context, noRegUsScreen);
-            });
-          }, 'Entrada sin registro para usuarios'),
-          Row(
-            children: <Widget>[
-              expandedTextButton(() {
-                setState(() {
+      child: Container(
+          margin: EdgeInsets.all(100),
+          child: Center(
+            child: Column(
+              children: <Widget>[
+                expandedTextButton(() {
+                  Navigator.pushNamed(context, noRegUsScreen);
+                }, 'Ver los titulos disponibles'),
+                expandedTextButton(() {
                   Navigator.pushNamed(context, regUser);
-                });
-              }, 'Registrarse como usuario'),
-              expandedTextButton(() {
-                setState(() {
+                }, 'Registrate'),
+                expandedTextButton(() {
                   Navigator.pushNamed(context, logUser);
-                });
-              }, 'Entrar como usuario')
-            ],
-          ),
-          expandedTextButton(() {
-            setState(() {
-              Navigator.pushNamed(context, logCine);
-              // todo reg
-            });
-          }, 'Entrada como cine'),
-          expandedTextButton(() {
-            setState(() {
-              //httpUpdate();
-              Navigator.pushNamed(context, logAdmin);
-            });
-          }, 'Entrada como administrador'),
-        ],
-      )),
+                }, 'Entrar'),
+                expandedTextButton(() {
+                  Navigator.pushNamed(context, logCine);
+                }, 'Entrar como cine'),
+                expandedTextButton(() {
+                  Navigator.pushNamed(context, logAdmin);
+                }, 'Entrar como administrador'),
+              ],
+            ),
+          )),
     );
   }
 }
