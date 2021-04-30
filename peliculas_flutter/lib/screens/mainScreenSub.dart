@@ -2,19 +2,32 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
-import 'noRegUsScreen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'noRegUsScreen.dart';
 
-class _MainScreenInsideState {
-  BuildContext _context;
+String mainTitle = 'Principal';
+
+class MainScreenSub extends StatefulWidget {
+  @override
+  _MainScreenSubState createState() => _MainScreenSubState();
+}
+
+class _MainScreenSubState extends State<MainScreenSub> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class MainScreenInside extends StatefulWidget {
+  @override
+  _MainScreenInsideState createState() => _MainScreenInsideState();
+}
+
+class _MainScreenInsideState extends State<MainScreenInside> {
   int _pos = 0;
   String title = 'Principal';
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return willPopScope();
   }
 
@@ -26,7 +39,7 @@ class _MainScreenInsideState {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(mainTitle),
         ),
         drawer: Drawer(
           child: ListView(
@@ -43,9 +56,11 @@ class _MainScreenInsideState {
                 ),
               ),
               //TODO: agregar los widgets necesarios en la barra lateral
-              listTitle(_context, Icons.home_rounded, 'Principal', () {
-                title = 'Principal';
-                _pos = 0;
+              listTitle(context, Icons.home_rounded, 'Principal', () {
+                setState(() {
+                  mainTitle = 'Principal';
+                  _pos = 0;
+                });
               }),
             ],
           ),

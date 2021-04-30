@@ -56,6 +56,6 @@ void continueWithLogin(mAuth, context) async {
     String points =
         jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['points'];
 
-    Navigator.pushNamed(context, mainScreenInside);
+    Navigator.pushNamed(context, mainScreenSub);
   }
 }

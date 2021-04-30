@@ -67,8 +67,13 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
                       ? ch
                       : ListView.builder(
                           itemCount: films.list.length,
-                          itemBuilder: (_, i) => ListTile(
-                            title: Text(films.list[i].title),
+                          itemBuilder: (_, i) => GestureDetector(
+                            onTap: () {
+                              print('movie: ${films.list[i].title}');
+                            },
+                            child: ListTile(
+                              title: Text(films.list[i].title),
+                            ),
                           ),
                         ),
                 ),
@@ -86,7 +91,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
 //     // TODO add drawer
 //     //drawer: AppDrawer(),
 //     body: Consumer<ListaFilms>{
-      
+
 //     },
 //   );
 // }

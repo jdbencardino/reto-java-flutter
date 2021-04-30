@@ -17,9 +17,13 @@ Future<void> userType() async {
   FirebaseAuth mAuth = FirebaseAuth.instance;
   if (mAuth != null) {
     String uid = mAuth.currentUser.uid.toString();
-    String url = 'http://localhost:8080/users/search/findByUid?uid=$uid';
+    String url = 'http://localhost:8080/subscribers/search/findByUid?uid=$uid';
+    String token = await mAuth.currentUser.getIdToken();
     Uri link = Uri.parse(url);
-    var respuesta = await http.get(link);
+    var respuesta = await http.get(
+      link,
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
 
     var id = jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['id']
         .toString();

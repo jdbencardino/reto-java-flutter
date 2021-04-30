@@ -16,13 +16,14 @@ Widget kBasedLoginWidget(
     //Firebase.initializeApp();
     FirebaseAuth _auth = FirebaseAuth.instance;
 
+    // configurar el nivel de acceso
     try {
       final mAuth = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
       if (mAuth != null) {
-        Navigator.pushNamed(context, mainScreenInside);
+        //Navigator.pushNamed(context, mainScreenInside);
       }
     } catch (e) {
       print(e);
