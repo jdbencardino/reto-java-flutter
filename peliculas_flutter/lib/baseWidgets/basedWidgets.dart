@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:peliculas_flutter/itemsScreen/suscriber.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:peliculas_flutter/httpRequest.dart';
+import 'package:peliculas_flutter/httpRequest.dart';
 
 Widget kBasedLoginWidget(
     String title, BuildContext context, @required Function onClick) {
@@ -165,47 +169,13 @@ Widget kBasedRegisterWidget(
   );
 }
 
-Future<void> kShowMyDialogMovie(title, id, _MyContext) async {
-  return showDialog<void>(
-    context: _MyContext,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('$title'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              FloatingActionButton(
-                child: const Icon(Icons.play_arrow),
-                onPressed: () {
-                  print('lets to see the movie! $title');
-                },
-              ),
-              kFlatButtonMovie('Views', id),
-              kFlatButtonMovie('To see', id),
-              kFlatButtonMovie('Favorite', id),
-              kFlatButtonMovie('Available cinema', id)
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Cerrar'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
-
-Widget kFlatButtonMovie(String title, String id) {
+Widget kFlatButtonMovie(idUser, title, id) {
   return FlatButton(
     padding: EdgeInsets.all(8),
     child: Text(title),
-    onPressed: () {},
+    onPressed: () {
+      httpSetFilm(idUser, id, title);
+    },
   );
 }
 
@@ -225,6 +195,36 @@ Widget kWidget(
           Text(date),
         ],
       ),
+    ),
+  );
+}
+
+Widget kTextDataUser(id, title, data, key) {
+  String _data;
+
+  return Container(
+    padding: EdgeInsets.all(10),
+    child: Column(
+      children: <Widget>[
+        Text(
+          data,
+          style: TextStyle(fontSize: 20),
+        ),
+        TextField(
+          decoration: InputDecoration(
+            hintText: 'Ingrese su nuevo : $title',
+            suffix: IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  httpUpdate(id, key, _data);
+                }),
+          ),
+          onChanged: (value) {
+            _data = value;
+          },
+          controller: TextEditingController(),
+        ),
+      ],
     ),
   );
 }

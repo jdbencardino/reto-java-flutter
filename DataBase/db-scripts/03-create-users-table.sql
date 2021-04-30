@@ -78,16 +78,16 @@ AUTO_INCREMENT = 1;
 -- Add sample data
 -- -----------------------------------------------------
 INSERT INTO user (username, uid, name, surname, email)
-VALUES ('juan', 'd82VKvafUXSp0xR9UBgm1ylYW5C3', 'juan','bencardino', 'c@ibm.com');
+VALUES ('juan', '2hpMMorqj5VzQJnB7LZwGYXBItL2', 'juan','bencardino', 'j@ibm.com');
 
 INSERT INTO user (username, uid, name, surname, email)
-VALUES ('diego', 'fXQO2wnq1CgVuQcpmp1PLWoohVU2', 'diego','bencardino', 'g@ibm.com');
+VALUES ('diego', '4Qxd7AEXbbbkjaEpiOQywBHTY7g2', 'diego','bencardino', 'd@ibm.com');
 
 INSERT INTO user (username, uid, name, surname, email)
-VALUES ('santiago', 'xPErLFozJQS1bXj9LsYbFBKj1nJ3', 'santiago','londono', 'asss@ibm.com');
+VALUES ('santiago', 'MfY8qJG3qZZqumfUQYpY10zve152', 'santiago','londono', 's@ibm.com');
 
 INSERT INTO user (username, uid, name, surname, email)
-VALUES ('cristian', 'zML2arxgdXRHSVSy2xerJtwnvAm1', 'cristian','arenas', 'as@ibm.com');
+VALUES ('cristian', 'ZAlAAQMUYIdI4zV0dZwuq0XMlG12', 'cristian','arenas', 'c@ibm.com');
 
 INSERT INTO subscriber (points, user_id) VALUES (10, 2);
 INSERT INTO admin (user_id) VALUES (3);

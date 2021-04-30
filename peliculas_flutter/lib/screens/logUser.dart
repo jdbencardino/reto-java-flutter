@@ -5,8 +5,6 @@ import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class LogUser extends StatefulWidget {
   @override
@@ -15,19 +13,13 @@ class LogUser extends StatefulWidget {
 
 class _LogUserState extends State<LogUser> {
   @override
-  void initState() {
-    Firebase.initializeApp();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return kBasedLoginWidget('Log User', context, onClick);
+    return kBasedLoginWidget('Log User', context, onClickLog);
   }
 }
 
-void onClick(context, email, password) async {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+Future<void> onClickLog(context, email, password) async {
+  FirebaseAuth _auth = await FirebaseAuth.instance;
 
   try {
     final mAuth = await _auth.signInWithEmailAndPassword(
@@ -35,25 +27,35 @@ void onClick(context, email, password) async {
       password: password,
     );
 
-    if (mAuth != null) {
-      String url = 'http://localhost:8080/users';
-      Uri link = Uri.parse(url);
-      var respuesta = await http.get(
-        link,
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      respuesta.statusCode < 400
-          ? Navigator.pushNamed(context, mainScreenInside)
-          : print('Error + ${respuesta.statusCode}');
-
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('email', _auth.currentUser.email);
-      prefs.setString('uid', _auth.currentUser.uid);
-      prefs.setString('accessLevel', 'Usuario');
-      Navigator.pushNamed(context, mainScreenInside);
-    }
+    continueWithLogin(mAuth, context);
   } catch (e) {
     print(e);
+  }
+}
+
+void continueWithLogin(mAuth, context) async {
+  if (mAuth != null) {
+    String uid = mAuth.currentUser.uid;
+    String url = 'http://localhost:8080/users/search/findByUid?uid=${uid}';
+    Uri link = Uri.parse(url);
+    var respuesta = await http.get(
+      link,
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    String id = jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['id']
+        .toString();
+    String username =
+        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['username'];
+    String name =
+        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['name'];
+    String surname =
+        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['surname'];
+    String email =
+        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['email'];
+    String points =
+        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['points'];
+
+    Navigator.pushNamed(context, mainScreenInside);
   }
 }

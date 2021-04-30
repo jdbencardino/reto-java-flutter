@@ -1,4 +1,4 @@
-// constantes globales
+// Rutas http
 const String url_get_movies = 'http://localhost:8080/films';
 const String url_get_users = 'http://localhost:8080/users';
 const String url_get_movie_from_title =
@@ -12,3 +12,12 @@ const String logUser = '/logUser';
 const String logCine = '/logCine';
 const String logAdmin = '/logAdmin';
 const String regUser = '/regUser';
+
+const userUserName = "USERUSERNAME";
+const userName = 'USERNAME';
+const userId = 'USERID';
+const userAccessLevel = 'USERACCESSLEVEL';
+const userEmail = 'USEREMAIL';
+const userPoints = 'USEREMAIL';
+const userSurname = 'USEREMAIL';
+const userUid = 'USEREMAIL';
