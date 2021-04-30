@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,12 @@ class LogUser extends StatefulWidget {
 class _LogUserState extends State<LogUser> {
   @override
   Widget build(BuildContext context) {
-    return kBasedLoginWidget('Log User', context, onClickLog);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Entrar como suscriptor'),
+      ),
+      body: kBasedLoginWidget('Log User', context, onClickLog),
+    );
   }
 }
 

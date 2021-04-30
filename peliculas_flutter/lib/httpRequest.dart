@@ -1,8 +1,12 @@
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas_flutter/helpers/api_helper.dart';
+import 'package:peliculas_flutter/providers/film.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'helpers/constantes.dart';
 
 void httpSetFilm(idUser, idFilm, type) async {
   try {
@@ -43,4 +47,46 @@ String getUid() {
   } else {
     return null;
   }
+}
+
+Future<Object> getMoviesByTitle(title) async {
+  try {
+    Uri uri = Uri.parse('${ApiHelper.url_get_movie_from_title}$title');
+    final response = await http.get(uri);
+    final responseData = json.decode(response.body) as Map<String, dynamic>;
+
+    final resList = responseData['_embedded']['films'] as List<dynamic>;
+
+    final List<Film> filmList = resList
+        .map((data) {
+          final film = Film(title: data['title']);
+          return film;
+        })
+        .toList()
+        .reversed
+        .toList();
+
+    return filmList;
+  } catch (e) {}
+}
+
+Future<Suscriber> getDataSubscriber() async {
+  try {
+    Uri uri = Uri.parse('${ApiHelper.url_get_users}$title');
+    final response = await http.get(uri);
+    final responseData = json.decode(response.body) as Map<String, dynamic>;
+
+    final resList = responseData['_embedded']['films'] as List<dynamic>;
+
+    final List<Film> filmList = resList
+        .map((data) {
+          final film = Film(title: data['title']);
+          return film;
+        })
+        .toList()
+        .reversed
+        .toList();
+
+    return filmList;
+  } catch (e) {}
 }

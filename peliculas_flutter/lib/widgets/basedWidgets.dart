@@ -23,7 +23,7 @@ Widget kBasedLoginWidget(
         password: password,
       );
       if (mAuth != null) {
-        //Navigator.pushNamed(context, mainScreenInside);
+        Navigator.pushNamed(context, mainScreenSub);
       }
     } catch (e) {
       print(e);

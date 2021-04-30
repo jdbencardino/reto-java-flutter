@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 
 String mainTitle = 'Principal';
+int _pos = 0;
+Suscriber suscriber;
 
 class MainScreenSub extends StatefulWidget {
   @override
@@ -13,22 +16,16 @@ class MainScreenSub extends StatefulWidget {
 class _MainScreenSubState extends State<MainScreenSub> {
   @override
   Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class MainScreenInside extends StatefulWidget {
-  @override
-  _MainScreenInsideState createState() => _MainScreenInsideState();
-}
-
-class _MainScreenInsideState extends State<MainScreenInside> {
-  int _pos = 0;
-  String title = 'Principal';
-
-  @override
-  Widget build(BuildContext context) {
-    return willPopScope();
+    return FutureBuilder(
+      future: getSubsData(),
+      builder: (context, snapShot) {
+        if (snapShot.connectionState == ConnectionState.done) {
+          return willPopScope();
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget willPopScope() {
@@ -56,9 +53,26 @@ class _MainScreenInsideState extends State<MainScreenInside> {
                 ),
               ),
               //TODO: agregar los widgets necesarios en la barra lateral
-              listTitle(context, Icons.home_rounded, 'Principal', () {
+              listTitle(context, Icons.search, 'Buscar pelìcula', () {
                 setState(() {
                   mainTitle = 'Principal';
+                  _pos = 0;
+                });
+              }),
+              listTitle(context, Icons.person, 'Mi perfìl', () {
+                setState(() {
+                  mainTitle = 'Mi perfìl';
+                  _pos = 0;
+                });
+              }),
+              listTitle(context, Icons.local_offer, 'Ofertas', () {
+                setState(() {
+                  mainTitle = 'Ofertas';
+                  _pos = 0;
+                });
+              }),
+              listTitle(context, Icons.close, 'Cerrar sesiòn', () {
+                setState(() {
                   _pos = 0;
                 });
               }),
@@ -69,24 +83,38 @@ class _MainScreenInsideState extends State<MainScreenInside> {
       ),
     );
   }
-}
 
-Widget _getWidgetItemSelected(int pos) {
-  switch (pos) {
-    case 0:
-      return Container();
-    default:
-      return Container();
+  Future<void> getSubsData() {
+    return null;
   }
-}
 
-Widget listTitle(context, icon, title, @required onClick) {
-  return ListTile(
-    leading: Icon(icon),
-    title: Text(title),
-    onTap: () {
-      Navigator.of(context).pop();
-      onClick();
-    },
-  );
+  Widget _getWidgetItemSelected(int pos) {
+    switch (pos) {
+      case 0:
+        //listar peliculas
+        return Container();
+      case 0:
+        //mi perfil
+        return Container();
+      case 0:
+        //ver ofertas
+        return Container();
+      case 0:
+        //cerrar sesion
+        return Container();
+      default:
+        return Container();
+    }
+  }
+
+  Widget listTitle(context, icon, title, @required onClick) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        Navigator.of(context).pop();
+        onClick();
+      },
+    );
+  }
 }
