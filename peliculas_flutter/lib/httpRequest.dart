@@ -76,12 +76,17 @@ Future<void> userType() async {
 
 void deleteAccount(uid, _context) async {
   try {
+    FirebaseAuth _mAuth = FirebaseAuth.instance;
+    String token = await _mAuth.currentUser.getIdToken();
+
     Uri link = Uri.parse('$delete_user_by_uid$uid');
     if (uid == getUid()) {
       //delete user in database
       var respuesta = await http.get(
         link,
+        headers: {'Authorization': 'Bearer ${token}'},
       );
+
       if (respuesta.statusCode < 400) {
         // delete user in firebase
         FirebaseAuth mAuth = FirebaseAuth.instance;

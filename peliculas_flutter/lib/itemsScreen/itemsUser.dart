@@ -115,7 +115,7 @@ class _MiPerfilState extends State<MiPerfil> {
                 Container(
                   child: ElevatedButton(
                       child: Text('BORRAR CUENTA'),
-                      onPressed: () {
+                      onPressed: () async {
                         deleteAccount(getUid(), context);
                       }),
                 )
