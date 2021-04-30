@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByUid(@RequestParam("uid") String uid);
-
+public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
+    List<T> findByUid(@RequestParam("uid") String uid);
 
     @Transactional
     Long deleteByUid(@RequestParam("uid") String uid);

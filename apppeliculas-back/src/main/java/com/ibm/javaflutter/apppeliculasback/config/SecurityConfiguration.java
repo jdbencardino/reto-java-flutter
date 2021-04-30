@@ -36,6 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // protect endpoint /offers
         http.authorizeRequests()
+                .antMatchers("/**")
+                .permitAll()
                 .antMatchers("/users/**")
                 .hasAuthority(RoleNames.ROLE_CINEMA)
                 .antMatchers(HttpMethod.OPTIONS,"/actors/**")

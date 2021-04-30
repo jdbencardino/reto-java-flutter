@@ -11,7 +11,7 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepository<User> userRepository;
 
     public User getUserByUid(String uid){
         User user = null;
