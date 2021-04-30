@@ -7,7 +7,7 @@ version: '3.7'
 # {"auths":{},"credsStore":"","stackOrchestrator":"swarm"}
 services:
   peliculasapp:
-    image: peliculasapp_img:10.0
+    image: peliculasapp_img:12.0
       #build:
       #context: .
     #dockerfile: Dockerfile
@@ -26,7 +26,7 @@ services:
       - peliculasapp-network
 
   mysql:
-    image: mysql_peliculas_img:7.0
+    image: mysql_peliculas_img:8.0
     ports:
       - "3306:3306"
     restart: always
@@ -35,6 +35,7 @@ services:
       MYSQL_USER: peliculasapp
       MYSQL_PASSWORD: peliculasapp
       MYSQL_DATABASE: peliculas_app_back
+    container_name: mysql_container
     volumes:
       - mysql-database-data-volume:/var/lib/mysql
     networks:
