@@ -75,12 +75,12 @@ Future<void> userType() async {
 }
 
 void deleteAccount(uid, _context) async {
+  uid = 'Ctk567bPoOd1QohSz2VcpuuPUvT2';
   try {
     FirebaseAuth _mAuth = FirebaseAuth.instance;
     String token = await _mAuth.currentUser.getIdToken();
-
     Uri link = Uri.parse('$delete_user_by_uid$uid');
-    if (uid == getUid()) {
+    if (uid != getUid()) {
       //delete user in database
       var respuesta = await http.get(
         link,
@@ -91,8 +91,8 @@ void deleteAccount(uid, _context) async {
         // delete user in firebase
         FirebaseAuth mAuth = FirebaseAuth.instance;
         await mAuth.currentUser.delete();
-        print('User deleted ');
-        Navigator.pushNamed(_context, regUser);
+        print('User deleted');
+        Navigator.pushNamed(_context, mainScreenId);
       } else {
         print(respuesta.statusCode);
       }

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/itemsScreen/itemsUser.dart';
 import 'noRegUsScreen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:peliculas_flutter/itemsScreen/user.dart';
 import 'package:peliculas_flutter/constantes.dart';
+import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
 
 String mainTitle = 'Principal';
 
@@ -47,34 +47,31 @@ class _MainScreenInsideState extends State<MainScreenInside> {
                   ),
                 ),
               ),
-              listTitle(context, Icons.home_rounded, 'Principal', () {
-                setState(() {
-                  mainTitle = 'Principal';
-                  _pos = 0;
-                });
-              }),
-              listTitle(context, Icons.search, 'Buscar peliculas', () {
+              listTitle(Icons.search, 'Buscar peliculas', () {
                 setState(() {
                   mainTitle = 'Peliculas disponibles';
                   _pos = 1;
+                  Navigator.of(context).pop();
                 });
               }),
-              listTitle(context, Icons.person, 'Mi perfil', () {
+              listTitle(Icons.person, 'Mi perfil', () {
                 setState(() {
                   mainTitle = 'Mi perfil';
                   _pos = 2;
+                  Navigator.of(context).pop();
                 });
               }),
-              listTitle(context, Icons.home_rounded, 'Salir', () {
+              listTitle(Icons.home_rounded, 'Salir', () {
                 setState(() {
                   _pos = 3;
+                  Navigator.of(context).pop();
                 });
               }),
-              listTitle(
-                  context, Icons.announcement_outlined, 'Acerca de la app', () {
+              listTitle(Icons.announcement_outlined, 'Acerca de la app', () {
                 setState(() {
                   mainTitle = 'Acerca de la App';
                   _pos = 4;
+                  Navigator.of(context).pop();
                 });
               }),
             ],
@@ -103,13 +100,4 @@ Widget _getWidgetItemSelected(int pos) {
   }
 }
 
-Widget listTitle(context, icon, title, @required onClick) {
-  return ListTile(
-    leading: Icon(icon),
-    title: Text(title),
-    onTap: () {
-      Navigator.of(context).pop();
-      onClick();
-    },
-  );
-}
+Future<Suscriber> getCompleteUser(uid) async {}

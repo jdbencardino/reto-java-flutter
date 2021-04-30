@@ -228,3 +228,13 @@ Widget kTextDataUser(id, title, data, key, @required Function fn) {
     ),
   );
 }
+
+Widget listTitle(icon, title, @required onClick) {
+  return ListTile(
+    leading: Icon(icon),
+    title: Text(title),
+    onTap: () {
+      onClick();
+    },
+  );
+}

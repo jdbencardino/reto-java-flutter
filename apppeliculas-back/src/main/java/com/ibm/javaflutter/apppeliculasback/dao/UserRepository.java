@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByUid(@RequestParam("uid") String uid);
 
+
     @Transactional
     Long deleteByUid(@RequestParam("uid") String uid);
 }
