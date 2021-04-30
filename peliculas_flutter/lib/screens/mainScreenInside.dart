@@ -6,20 +6,18 @@ import 'noRegUsScreen.dart';
 import 'package:peliculas_flutter/itemsScreen/user.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'noRegUsScreen.dart';
 
-String mainTitle = 'Principal';
-
-class MainScreenInside extends StatefulWidget {
-  @override
-  _MainScreenInsideState createState() => _MainScreenInsideState();
-}
-
-class _MainScreenInsideState extends State<MainScreenInside> {
+class _MainScreenInsideState {
+  BuildContext _context;
   int _pos = 0;
   String title = 'Principal';
 
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return willPopScope();
   }
 
@@ -31,7 +29,7 @@ class _MainScreenInsideState extends State<MainScreenInside> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(mainTitle),
+          title: Text(title),
         ),
         drawer: Drawer(
           child: ListView(
@@ -47,32 +45,10 @@ class _MainScreenInsideState extends State<MainScreenInside> {
                   ),
                 ),
               ),
-              listTitle(Icons.search, 'Buscar peliculas', () {
-                setState(() {
-                  mainTitle = 'Peliculas disponibles';
-                  _pos = 1;
-                  Navigator.of(context).pop();
-                });
-              }),
-              listTitle(Icons.person, 'Mi perfil', () {
-                setState(() {
-                  mainTitle = 'Mi perfil';
-                  _pos = 2;
-                  Navigator.of(context).pop();
-                });
-              }),
-              listTitle(Icons.home_rounded, 'Salir', () {
-                setState(() {
-                  _pos = 3;
-                  Navigator.of(context).pop();
-                });
-              }),
-              listTitle(Icons.announcement_outlined, 'Acerca de la app', () {
-                setState(() {
-                  mainTitle = 'Acerca de la App';
-                  _pos = 4;
-                  Navigator.of(context).pop();
-                });
+              //TODO: agregar los widgets necesarios en la barra lateral
+              listTitle(_context, Icons.home_rounded, 'Principal', () {
+                title = 'Principal';
+                _pos = 0;
               }),
             ],
           ),
@@ -86,15 +62,6 @@ class _MainScreenInsideState extends State<MainScreenInside> {
 Widget _getWidgetItemSelected(int pos) {
   switch (pos) {
     case 0:
-      return Container();
-    case 1:
-      // TODO check where is Bodylayout()
-      return null;
-    case 2:
-      return MiPerfil();
-    case 3:
-      return Container();
-    case 4:
       return Container();
     default:
       return Container();
