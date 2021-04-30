@@ -52,7 +52,6 @@ class _MainScreenSubState extends State<MainScreenSub> {
                   ),
                 ),
               ),
-              //TODO: agregar los widgets necesarios en la barra lateral
               listTitle(context, Icons.search, 'Buscar pelìcula', () {
                 setState(() {
                   mainTitle = 'Principal';

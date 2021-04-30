@@ -239,3 +239,5 @@ Widget listTitle(icon, title, @required onClick) {
     },
   );
 }
+
+Widget userProfile() {}
