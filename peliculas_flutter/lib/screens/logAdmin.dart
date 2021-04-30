@@ -37,7 +37,7 @@ void onClick(context, email, password) async {
       prefs.setString('email', _auth.currentUser.email);
       prefs.setString('uid', _auth.currentUser.uid);
       prefs.setString('accesLevel', 'Administrador');
-      Navigator.pushNamed(context, mainScreenInside);
+      Navigator.pushNamed(context, mainScreenAdmin);
     }
   } catch (e) {
     print(e);

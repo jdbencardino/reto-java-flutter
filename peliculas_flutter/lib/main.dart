@@ -36,11 +36,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String initialRouteX = mainScreenId;
-
   @override
   Widget build(BuildContext context) {
-    // isUser();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -53,15 +50,17 @@ class _MyAppState extends State<MyApp> {
           primarySwatch: Colors.blue,
           accentColor: Colors.orange,
         ),
-        initialRoute: initialRouteX,
+        initialRoute: mainScreenId,
         routes: {
           mainScreenId: (context) => MainScreen(),
           noRegUsScreen: (context) => NoRegUsScreen(),
-          mainScreenInside: (context) => MainScreenInside(),
           logUser: (context) => LogUser(),
           logCine: (context) => LogCine(),
           logAdmin: (context) => LogAdmin(),
-          regUser: (context) => RegUser()
+          regUser: (context) => RegUser(),
+          mainScreenSub: (context) => MainScreenSub(),
+          mainScreenCine: (context) => MainScreenCine(),
+          mainScreenAdmin: (context) => MainScreenAdmin()
         },
       ),
     );

@@ -6,8 +6,6 @@ import 'package:peliculas_flutter/helpers/constantes.dart';
 import '../widgets/expanded_text_button.dart';
 
 class MainScreen extends StatefulWidget {
-  static const routeName = '/';
-
   @override
   _MainScreenState createState() => _MainScreenState();
 }

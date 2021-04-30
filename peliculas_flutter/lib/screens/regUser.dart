@@ -53,7 +53,7 @@ void onClick(context, username, name, surname, email, password) async {
       );
 
       if (respuesta.statusCode < 400) {
-        Navigator.pushNamed(context, mainScreenInside);
+        Navigator.pushNamed(context, mainScreenSub);
       } else {
         print('Error + ${respuesta.statusCode}');
       }

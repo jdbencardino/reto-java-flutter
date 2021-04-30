@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -11,8 +12,6 @@ import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 
 import '../providers/lista_films.dart';
 
-String _keyWord;
-List<Widget> _list = [];
 String urlDesigned = url_get_movies;
 var isUser;
 
@@ -41,40 +40,74 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
     }
   }
 
+  Widget bodyListPelis(_context) {
+    return Column(
+      children: [
+        Container(
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.all(20),
+                  child: TextField(
+                    onChanged: (value) {
+                      //TODO: set moviesList in httpRequest: getMoviesByTitle()
+                      String _key = value;
+                      print(_key);
+                    },
+                    controller: TextEditingController(),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        FutureBuilder(
+          future: _getFilms(_context),
+          builder: (ctx, snapshot) => Container(
+            //drawer: AppDrawer(),
+            child: snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _getFilms(context),
+                    child: Consumer<ListaFilms>(
+                      child: Center(
+                        child: Text('No hay películas'),
+                      ),
+                      builder: (ctx, films, ch) => films.list.length == 0
+                          ? ch
+                          : ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: films.list.length,
+                              itemBuilder: (_, i) => GestureDetector(
+                                onTap: () {
+                                  print('movie: ${films.list[i].title}');
+                                },
+                                child: ListTile(
+                                  title: Text(films.list[i].title),
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // return Consumer<ListaFilms>()
-    return FutureBuilder(
-      future: _getFilms(context),
-      builder: (ctx, snapshot) => Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('Lista Películas'),
-          //TODO agregar accion para buscar películas
+          title: Text('Lista Pelìculas'),
         ),
-        // TODO add drawer
-        //drawer: AppDrawer(),
-        body: snapshot.connectionState == ConnectionState.waiting
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : RefreshIndicator(
-                onRefresh: () => _getFilms(context),
-                child: Consumer<ListaFilms>(
-                  child: Center(
-                    child: Text('No hay películas'),
-                  ),
-                  builder: (ctx, films, ch) => films.list.length == 0
-                      ? ch
-                      : ListView.builder(
-                          itemCount: films.list.length,
-                          itemBuilder: (_, i) => ListTile(
-                            title: Text(films.list[i].title),
-                          ),
-                        ),
-                ),
-              ),
-      ),
-    );
+        //TODO agregar accion para buscar películas
+        body: bodyListPelis(context));
   }
 }
 
@@ -86,7 +119,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
 //     // TODO add drawer
 //     //drawer: AppDrawer(),
 //     body: Consumer<ListaFilms>{
-      
+
 //     },
 //   );
 // }
