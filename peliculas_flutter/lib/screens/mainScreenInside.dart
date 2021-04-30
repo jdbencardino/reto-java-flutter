@@ -5,6 +5,7 @@ import 'package:peliculas_flutter/itemsScreen/itemsUser.dart';
 import 'noRegUsScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:peliculas_flutter/constantes.dart';
 
 String mainTitle = 'Principal';
 
@@ -88,15 +89,15 @@ class _MainScreenInsideState extends State<MainScreenInside> {
 Widget _getWidgetItemSelected(int pos) {
   switch (pos) {
     case 0:
-      return null;
+      return Container();
     case 1:
       return BodyLayout();
     case 2:
       return MiPerfil();
     case 3:
-      return null; //miPerfil('salido');
+      return Container();
     case 4:
-      return null; //miPerfil('about');
+      return Container();
     default:
       return Container();
   }

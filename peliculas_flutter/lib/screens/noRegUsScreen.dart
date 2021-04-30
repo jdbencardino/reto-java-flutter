@@ -63,9 +63,9 @@ class _BodyLayoutState extends State<BodyLayout> {
             temp[i]['date'],
             () {
               if (getUid() != null) {
-                setState(() {
-                  //_showMyDialog(_context);
-                });
+                print(getUid());
+                showMovieDialog(
+                    getUid(), temp[i]['title'], temp[i]['id'], context);
                 //  kShowMyDialogMovie(getUid(), temp[i]['title'], temp[i]['id'], _context);
               }
             },
@@ -79,70 +79,41 @@ class _BodyLayoutState extends State<BodyLayout> {
     }
   }
 
-  Future _showMyDialog(BuildContext context) async {
-    return showDialog(
-      context: context,
-      builder: (_) => _buildAlertDialog(),
+  showMovieDialog(idUs, title, id, _MyContext) async {
+    showDialog<void>(
+      context: _MyContext,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('$title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                FloatingActionButton(
+                  child: const Icon(Icons.play_arrow),
+                  onPressed: () {
+                    print('lets to see the movie! $title');
+                  },
+                ),
+                kFlatButtonMovie(idUs, 'Views', id),
+                kFlatButtonMovie(idUs, 'To see', id),
+                kFlatButtonMovie(idUs, 'Favorite', id),
+                kFlatButtonMovie(idUs, 'Available cinema', id)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cerrar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
-
-  Widget _buildAlertDialog() {
-    return AlertDialog(
-      title: Text('Notificaciones'),
-      content:
-          Text("¿Desea recibir notificaciones? Serán muy pocas de verdad :)"),
-      actions: [
-        FlatButton(
-            child: Text("Aceptar"),
-            textColor: Colors.blue,
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        FlatButton(
-            child: Text("Cancelar"),
-            textColor: Colors.red,
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-      ],
-    );
-  }
-
-  // Future kShowMyDialogMovie(idUs, title, id, _MyContext) async {
-  //   return showDialog<void>(
-  //     context: _MyContext,
-  //     barrierDismissible: false, // user must tap button!
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('$title'),
-  //         content: SingleChildScrollView(
-  //           child: ListBody(
-  //             children: <Widget>[
-  //               FloatingActionButton(
-  //                 child: const Icon(Icons.play_arrow),
-  //                 onPressed: () {
-  //                   print('lets to see the movie! $title');
-  //                 },
-  //               ),
-  //               kFlatButtonMovie(idUs, 'Views', id),
-  //               kFlatButtonMovie(idUs, 'To see', id),
-  //               kFlatButtonMovie(idUs, 'Favorite', id),
-  //               kFlatButtonMovie(idUs, 'Available cinema', id)
-  //             ],
-  //           ),
-  //         ),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             child: Text('Cerrar'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

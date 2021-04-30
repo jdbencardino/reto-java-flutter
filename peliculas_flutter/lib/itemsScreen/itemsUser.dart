@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
-import 'package:peliculas_flutter/itemsScreen/suscriber.dart';
+import 'package:peliculas_flutter/itemsScreen/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,8 +36,8 @@ Future<void> userType() async {
 
     //print('$id');
 
-    suscriber =
-        await Suscriber(id, username, uid, name, surname, email, points);
+    suscriber = await Suscriber(id, username, uid, name, surname, email, points,
+        'Suscriber', 'NA', 'NA');
   }
 }
 
@@ -55,28 +55,76 @@ class _MiPerfilState extends State<MiPerfil> {
             projectSnap.hasData == null) {
           return Container();
         }
-        if (projectSnap.hasError) {
+        if (projectSnap.connectionState == ConnectionState.done) {
           return Container(
             padding: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
                 kTextDataUser(
-                    suscriber.id, 'Username', suscriber.username, 'username'),
-                kTextDataUser(suscriber.id, "Nombre", suscriber.name, 'name'),
+                    suscriber.id, 'Username', suscriber.username, 'username',
+                    (value) {
+                  if (value != null) {
+                    if (value.toString().length != 0) {
+                      httpUpdate(suscriber.id, 'username', value);
+                      setState(() {
+                        suscriber.username = value;
+                        print(value.toString());
+                      });
+                    }
+                  }
+                }),
+                kTextDataUser(suscriber.id, "Nombre", suscriber.name, 'name',
+                    (value) {
+                  if (value != null) {
+                    if (value.toString().length != 0) {
+                      httpUpdate(suscriber.id, 'name', value);
+                      setState(() {
+                        suscriber.name = value;
+                        print(value.toString());
+                      });
+                    }
+                  }
+                }),
                 kTextDataUser(
-                    suscriber.id, "Apellido", suscriber.surname, 'surname'),
+                    suscriber.id, "Apellido", suscriber.surname, 'surname',
+                    (value) {
+                  if (value != null) {
+                    if (value.toString().length != 0) {
+                      httpUpdate(suscriber.id, 'surname', value);
+                      setState(() {
+                        suscriber.surname = value;
+                        print(value.toString());
+                      });
+                    }
+                  }
+                }),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    'Email : ${suscriber.email}',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: Text(
                     'Puntos : ${suscriber.points}',
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 25),
                   ),
                 ),
+                Container(
+                  child: ElevatedButton(
+                      child: Text('BORRAR CUENTA'),
+                      onPressed: () {
+                        deleteAccount(getUid(), context);
+                      }),
+                )
               ],
             ),
           );
+        } else {
+          return Container();
         }
-        return Container();
       },
       future: userType(),
     );

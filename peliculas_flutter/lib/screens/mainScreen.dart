@@ -1,10 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/constantes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:peliculas_flutter/screens/logUser.dart';
-import 'package:peliculas_flutter/screens/noRegUsScreen.dart';
 
 BuildContext _context;
 

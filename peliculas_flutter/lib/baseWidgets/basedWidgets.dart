@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas_flutter/constantes.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:peliculas_flutter/itemsScreen/suscriber.dart';
+import 'package:peliculas_flutter/itemsScreen/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
@@ -199,7 +199,7 @@ Widget kWidget(
   );
 }
 
-Widget kTextDataUser(id, title, data, key) {
+Widget kTextDataUser(id, title, data, key, @required Function fn) {
   String _data;
 
   return Container(
@@ -216,7 +216,7 @@ Widget kTextDataUser(id, title, data, key) {
             suffix: IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: () {
-                  httpUpdate(id, key, _data);
+                  fn(_data);
                 }),
           ),
           onChanged: (value) {
