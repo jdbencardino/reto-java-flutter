@@ -1,6 +1,7 @@
 package com.ibm.javaflutter.apppeliculasback.config;
 
 import com.ibm.javaflutter.apppeliculasback.filters.FirebaseAuthenticationTokenFilter;
+import com.ibm.javaflutter.apppeliculasback.helpers.RoleNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // protect endpoint /offers
         http.authorizeRequests()
+                .antMatchers("/users/**")
+                .hasAuthority(RoleNames.ROLE_CINEMA)
                 .antMatchers(HttpMethod.OPTIONS,"/actors/**")
                 .authenticated()
                 .and()

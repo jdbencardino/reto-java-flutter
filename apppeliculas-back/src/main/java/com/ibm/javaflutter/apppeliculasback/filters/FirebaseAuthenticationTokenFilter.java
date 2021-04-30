@@ -10,6 +10,7 @@ import com.ibm.javaflutter.apppeliculasback.entities.Subscriber;
 import com.ibm.javaflutter.apppeliculasback.entities.User;
 import com.ibm.javaflutter.apppeliculasback.helpers.RoleNames;
 import com.ibm.javaflutter.apppeliculasback.models.Credentials;
+import com.ibm.javaflutter.apppeliculasback.services.RoleService;
 import com.ibm.javaflutter.apppeliculasback.services.SecurityService;
 import com.ibm.javaflutter.apppeliculasback.services.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,9 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
 //    @Autowired
 //    FirebaseAuth firebaseAuth;
@@ -104,30 +108,29 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
     private List<GrantedAuthority> findUserRoles(User curUser, FirebaseToken firebaseToken){
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if(curUser instanceof Admin){
-            authorities.add(new SimpleGrantedAuthority(RoleNames.ROLE_ADMIN));
-            if(!firebaseToken.getClaims().containsKey(RoleNames.ROLE_ADMIN)){
-                // TODO añadir logica para poner el Custom claim en el token
-                logger.info("Admin Role granted");
+        try {
+            if (curUser instanceof Admin) {
+                setRole(authorities,RoleNames.ROLE_ADMIN,firebaseToken);
             }
-        }
-        if(curUser instanceof Cinema){
-            authorities.add(new SimpleGrantedAuthority(RoleNames.ROLE_CINEMA));
-            if(!firebaseToken.getClaims().containsKey(RoleNames.ROLE_CINEMA)){
-                // TODO añadir logica para poner el Custom claim en el token
-                logger.info("Cinema Role granted");
+            if (curUser instanceof Cinema) {
+                setRole(authorities,RoleNames.ROLE_CINEMA,firebaseToken);
             }
-        }
-        if(curUser instanceof Subscriber){
-            authorities.add(new SimpleGrantedAuthority(RoleNames.ROLE_ADMIN));
-            if(!firebaseToken.getClaims().containsKey(RoleNames.ROLE_ADMIN)){
-                // TODO añadir logica para poner el Custom claim en el token
-                logger.info("Subscriber Role granted");
+            if (curUser instanceof Subscriber) {
+                setRole(authorities,RoleNames.ROLE_SUBSCRIBER,firebaseToken);
             }
+        }catch (Exception e){
+            logger.info("Unable to gran defined role :(");
         }
-
 
         return authorities;
+    }
+
+    private void setRole(List<GrantedAuthority> authorities, String roleName, FirebaseToken firebaseToken) throws Exception {
+        authorities.add(new SimpleGrantedAuthority(roleName));
+        if(!firebaseToken.getClaims().containsKey(roleName)){
+            roleService.addRole(firebaseToken.getUid(), roleName);
+            logger.info("Admin Role granted");
+        }
     }
 
     @Override
