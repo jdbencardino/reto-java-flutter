@@ -34,7 +34,7 @@ public class FirebaseAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
         logger.debug("doFilter:: authenticating...");
-        logger.info("doFilter:: authenticating... x2");
+        logger.info("doFilter:: authenticating...");
 
         HttpServletRequest httprequest = httpServletRequest;
         String authToken = securityService.getBearerToken(httprequest);
