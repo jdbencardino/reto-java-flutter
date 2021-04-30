@@ -9,6 +9,7 @@ const String delete_user_by_uid =
     'http://localhost:8080/users/search/deleteByUid?uid=';
 
 //Rutas de navegacion
+// TODO remover esto
 const String mainScreenId = '/';
 const String noRegUsScreen = '/noRegUsScreen';
 const String mainScreenInside = '/mainScreenInside';

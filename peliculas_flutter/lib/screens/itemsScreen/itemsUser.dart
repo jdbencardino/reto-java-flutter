@@ -2,13 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
-import 'package:peliculas_flutter/itemsScreen/user.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:peliculas_flutter/constantes.dart';
+import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:peliculas_flutter/baseWidgets/basedWidgets.dart';
+import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 
 Suscriber suscriber;
 

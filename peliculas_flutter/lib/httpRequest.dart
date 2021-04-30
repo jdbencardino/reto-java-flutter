@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:peliculas_flutter/constantes.dart';
-import 'package:peliculas_flutter/itemsScreen/user.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constantes.dart';
 import 'package:flutter/material.dart';
