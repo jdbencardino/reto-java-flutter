@@ -10,16 +10,29 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 
-List userListFull = [];
 Suscriber suscriber;
 
-Future<void> userType() async {
+void getAccessLevel() {
   FirebaseAuth mAuth = FirebaseAuth.instance;
+  mAuth.currentUser.getIdTokenResult(false).then((value) {});
+}
+
+Future<void> userType() async {
+  //getAccessLevel();
+  FirebaseAuth mAuth = await FirebaseAuth.instance;
   if (mAuth != null) {
-    String uid = mAuth.currentUser.uid.toString();
-    String url = 'http://localhost:8080/users/search/findByUid?uid=$uid';
+    String uid = getUid();
+    String token = await mAuth.currentUser.getIdToken();
+    String url = 'http://localhost:8080/subscribers/search/findByUid?uid=$uid';
     Uri link = Uri.parse(url);
-    var respuesta = await http.get(link);
+    //print('$uid ||| $token');
+    var respuesta = await http.get(
+      link,
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+
+    var temp = jsonDecode(respuesta.body)['_embedded']['subscribers'];
+    print(respuesta.body);
 
     var id = jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['id']
         .toString();
@@ -34,10 +47,10 @@ Future<void> userType() async {
     var points =
         jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['points'];
 
-    //print('$id');
-
-    suscriber =
-        await Suscriber(id, username, uid, name, surname, email, points);
+    suscriber = await Suscriber(id, username, uid, name, surname, email, points,
+        'Suscriber', 'NA', 'NA');
+  } else {
+    print('halo');
   }
 }
 
@@ -55,28 +68,77 @@ class _MiPerfilState extends State<MiPerfil> {
             projectSnap.hasData == null) {
           return Container();
         }
-        if (projectSnap.hasError) {
+        if (projectSnap.connectionState == ConnectionState.done) {
+          print(projectSnap.connectionState);
           return Container(
             padding: EdgeInsets.all(15),
             child: Column(
               children: <Widget>[
                 kTextDataUser(
-                    suscriber.id, 'Username', suscriber.username, 'username'),
-                kTextDataUser(suscriber.id, "Nombre", suscriber.name, 'name'),
+                    suscriber.id, 'Username', suscriber.username, 'username',
+                    (value) {
+                  if (value != null) {
+                    if (value.toString().length != 0) {
+                      httpUpdate(suscriber.id, 'username', value);
+                      setState(() {
+                        suscriber.username = value;
+                        print(value.toString());
+                      });
+                    }
+                  }
+                }),
+                kTextDataUser(suscriber.id, "Nombre", suscriber.name, 'name',
+                    (value) {
+                  if (value != null) {
+                    if (value.toString().length != 0) {
+                      httpUpdate(suscriber.id, 'name', value);
+                      setState(() {
+                        suscriber.name = value;
+                        print(value.toString());
+                      });
+                    }
+                  }
+                }),
                 kTextDataUser(
-                    suscriber.id, "Apellido", suscriber.surname, 'surname'),
+                    suscriber.id, "Apellido", suscriber.surname, 'surname',
+                    (value) {
+                  if (value != null) {
+                    if (value.toString().length != 0) {
+                      httpUpdate(suscriber.id, 'surname', value);
+                      setState(() {
+                        suscriber.surname = value;
+                        print(value.toString());
+                      });
+                    }
+                  }
+                }),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  child: Text(
+                    'Email : ${suscriber.email}',
+                    style: TextStyle(fontSize: 25),
+                  ),
+                ),
                 Container(
                   padding: EdgeInsets.all(15),
                   child: Text(
                     'Puntos : ${suscriber.points}',
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 25),
                   ),
                 ),
+                Container(
+                  child: ElevatedButton(
+                      child: Text('BORRAR CUENTA'),
+                      onPressed: () async {
+                        deleteAccount(getUid(), context);
+                      }),
+                )
               ],
             ),
           );
+        } else {
+          return Container();
         }
-        return Container();
       },
       future: userType(),
     );

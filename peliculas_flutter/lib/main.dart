@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/providers/lista_films.dart';
 import 'package:provider/provider.dart';
 
+import 'package:http/http.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/screens/logAdmin.dart';
 import 'package:peliculas_flutter/screens/logCine.dart';
@@ -39,22 +40,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String initialRouteX = mainScreenId;
-
-  void isUser() {
-    try {
-      FirebaseAuth.instance.authStateChanges().listen((User user) {
-        if (user == null) {
-          print('User is currently signed out!');
-          initialRouteX = mainScreenId;
-        } else {
-          initialRouteX = mainScreenInside;
-          print('User is signed in!');
-        }
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
