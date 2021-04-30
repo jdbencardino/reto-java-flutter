@@ -17,22 +17,28 @@ class ListaFilms with ChangeNotifier {
 
   Future<void> fetchAndSetFilms() async {
     final url = Uri.parse('${ApiHelper.url_get_movies}');
+    print(url);
     // TODO add Authentication header to this
-    final response = await http.get(url);
-    final responseData = json.decode(response.body) as Map<String, dynamic>;
 
-    final resList = responseData['_embedded']['films'] as List<dynamic>;
+    try {
+      final response = await http.get(url);
+      final responseData = json.decode(response.body) as Map<String, dynamic>;
 
-    final List<Film> filmList = resList
-        .map((data) {
-          final film = Film(title: data['title']);
-          return film;
-        })
-        .toList()
-        .reversed
-        .toList();
+      final resList = responseData['_embedded']['films'] as List<dynamic>;
 
-    _list = filmList;
-    notifyListeners();
+      final List<Film> filmList = resList
+          .map((data) {
+            final film = Film(title: data['title']);
+            return film;
+          })
+          .toList()
+          .reversed
+          .toList();
+
+      _list = filmList;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 }
