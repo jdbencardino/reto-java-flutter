@@ -8,4 +8,6 @@ class ApiHelper {
       'http://localhost:8080/subscribers/search/findByUid?uid=';
   static const url_get_admin_by_id =
       'http://localhost:8080/admins/search/findByUid?uid=';
+  static const url_get_cinema_by_id =
+      'http://localhost:8080/cinemas/search/findByUid?uid=';
 }

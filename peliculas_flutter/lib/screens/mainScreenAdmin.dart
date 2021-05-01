@@ -14,7 +14,7 @@ class MainScreenAdmin extends StatefulWidget {
 }
 
 class _MainScreenAdminState extends State<MainScreenAdmin> {
-  String mainTitle = 'Principal';
+  String mainTitle = 'Admin Panel';
   int _pos = 0;
   Admin _admin;
 
@@ -41,18 +41,22 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red,
           title: Text(mainTitle),
         ),
         drawer: Drawer(
           child: ListView(
             children: [
               UserAccountsDrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                ),
                 accountName: Text(_admin.username),
                 accountEmail: Text(_admin.email),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Text(
-                    'U',
+                    'A',
                     style: TextStyle(fontSize: 40),
                   ),
                 ),

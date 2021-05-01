@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/helpers/api_helper.dart';
 import 'package:peliculas_flutter/models/admin.dart';
+import 'package:peliculas_flutter/models/cine.dart';
 import 'package:peliculas_flutter/providers/film.dart';
 import 'helpers/constantes.dart';
 import './helpers/constantes.dart';
@@ -167,6 +168,34 @@ Future<Admin> getDataAdmin(uid) async {
       print("Los datos fueron guardados con Exito");
     });
     return admin;
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<Cine> getDataCinema(uid) async {
+  try {
+    Uri uri = Uri.parse('${ApiHelper.url_get_cinema_by_id}$uid');
+    final response = await http.get(uri);
+    final responseData = json.decode(response.body) as Map<dynamic, dynamic>;
+
+    final resList = responseData['_embedded']['cinemas'] as List<dynamic>;
+
+    Cine cine;
+    resList.forEach((data) {
+      cine = Cine(
+        data['id'].toString(),
+        data['username'],
+        uid,
+        data['name'],
+        data['surname'],
+        data['email'],
+        data['web'],
+        data['address'],
+      );
+      print("Los datos fueron guardados con Exito");
+    });
+    return cine;
   } catch (e) {
     print(e);
   }
