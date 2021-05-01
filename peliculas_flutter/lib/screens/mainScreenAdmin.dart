@@ -5,6 +5,7 @@ import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/models/admin.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'package:peliculas_flutter/models/subscriber.dart';
+import 'package:peliculas_flutter/widgets/ListPelis.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/widgets/kAdminWidget.dart';
 import 'noRegUsScreen.dart';
@@ -103,7 +104,7 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
     switch (pos) {
       case 0:
         //listar peliculas
-        return NoRegUsScreen().createState().bodyListPelis(context);
+        return ListaPelis();
       case 1:
         //mi perfil
         return kAdminWidget(_admin, 'subscribers');

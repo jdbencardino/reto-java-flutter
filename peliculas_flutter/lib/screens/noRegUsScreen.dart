@@ -26,93 +26,93 @@ class NoRegUsScreen extends StatefulWidget {
 class _NoRegUsScreenState extends State<NoRegUsScreen> {
   var _isInit = false;
 
-  Future<void> _getFilms(BuildContext context, {String query}) async {
-    print("Refrescando películas");
-    await Provider.of<ListaFilms>(
-      context,
-      listen: false,
-    ).fetchAndSetFilms(query: query);
-    print("Refrescado");
-  }
+  // Future<void> _getFilms(BuildContext context, {String query}) async {
+  //   print("Refrescando películas");
+  //   await Provider.of<ListaFilms>(
+  //     context,
+  //     listen: false,
+  //   ).fetchAndSetFilms(query: query);
+  //   print("Refrescado");
+  // }
 
-  _alertDialog(Film film) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: Text(film.title),
-        content: FilmDetails(film),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(ctx).pop();
-            },
-            child: Text("OK"),
-          )
-        ],
-      ),
-    );
-  }
+  // _alertDialog(Film film) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (ctx) => AlertDialog(
+  //       title: Text(film.title),
+  //       content: FilmDetails(film),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             Navigator.of(ctx).pop();
+  //           },
+  //           child: Text("OK"),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  Widget bodyListPelis(_context) {
-    return FutureBuilder(
-      future: _getFilms(_context),
-      builder: (ctx, snapshot) => Column(
-        children: [
-          Container(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    margin: EdgeInsets.all(20),
-                    child: TextField(
-                      onChanged: (value) {
-                        //TODO: set moviesList in httpRequest: getMoviesByTitle()
-                        String _key = value;
-                        _getFilms(context, query: value);
-                        print(_key);
-                      },
-                      controller: TextEditingController(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            //drawer: AppDrawer(),
-            child: snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () => _getFilms(context),
-                    child: Consumer<ListaFilms>(
-                      child: Center(
-                        child: Text('No hay películas'),
-                      ),
-                      builder: (ctx, films, ch) => films.list.length == 0
-                          ? ch
-                          : ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: films.list.length,
-                              itemBuilder: (_, i) => GestureDetector(
-                                onTap: () {
-                                  print('movie: ${films.list[i].title}');
-                                  _alertDialog(films.list[i]);
-                                },
-                                child: ListTile(
-                                  title: Text(films.list[i].title),
-                                ),
-                              ),
-                            ),
-                    ),
-                  ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget bodyListPelis(_context) {
+  //   return FutureBuilder(
+  //     future: _getFilms(_context),
+  //     builder: (ctx, snapshot) => Column(
+  //       children: [
+  //         Container(
+  //           child: Row(
+  //             children: [
+  //               Expanded(
+  //                 child: Container(
+  //                   margin: EdgeInsets.all(20),
+  //                   child: TextField(
+  //                     onChanged: (value) {
+  //                       //TODO: set moviesList in httpRequest: getMoviesByTitle()
+  //                       String _key = value;
+  //                       _getFilms(context, query: value);
+  //                       print(_key);
+  //                     },
+  //                     controller: TextEditingController(),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         Container(
+  //           //drawer: AppDrawer(),
+  //           child: snapshot.connectionState == ConnectionState.waiting
+  //               ? Center(
+  //                   child: CircularProgressIndicator(),
+  //                 )
+  //               : RefreshIndicator(
+  //                   onRefresh: () => _getFilms(context),
+  //                   child: Consumer<ListaFilms>(
+  //                     child: Center(
+  //                       child: Text('No hay películas'),
+  //                     ),
+  //                     builder: (ctx, films, ch) => films.list.length == 0
+  //                         ? ch
+  //                         : ListView.builder(
+  //                             scrollDirection: Axis.vertical,
+  //                             shrinkWrap: true,
+  //                             itemCount: films.list.length,
+  //                             itemBuilder: (_, i) => GestureDetector(
+  //                               onTap: () {
+  //                                 print('movie: ${films.list[i].title}');
+  //                                 _alertDialog(films.list[i]);
+  //                               },
+  //                               child: ListTile(
+  //                                 title: Text(films.list[i].title),
+  //                               ),
+  //                             ),
+  //                           ),
+  //                   ),
+  //                 ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   void didChangeDependencies() {

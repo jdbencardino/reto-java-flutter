@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/models/admin.dart';
 import 'package:peliculas_flutter/models/cine.dart';
+import 'package:peliculas_flutter/widgets/ListPelis.dart';
 import 'package:peliculas_flutter/widgets/kCinemaWidget.dart';
 
 class MainScreenCine extends StatefulWidget {
@@ -86,6 +87,19 @@ class _MainScreenCineState extends State<MainScreenCine> {
           ),
         ),
         body: _getWidgetItemSelected(_pos),
+        // body: Container(),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {},
+        // ),
+        floatingActionButton: _pos == 0
+            ? FloatingActionButton(
+                backgroundColor: Colors.yellow,
+                child: Icon(Icons.add),
+                onPressed: () {
+                  print("Agregar película");
+                },
+              )
+            : null,
       ),
     );
   }
@@ -94,7 +108,7 @@ class _MainScreenCineState extends State<MainScreenCine> {
     switch (pos) {
       case 0:
         //listar peliculas
-        return Container();
+        return ListaPelis();
       case 1:
         //mi perfil
         return kCinemaWidget(_cine, 'cinemas');

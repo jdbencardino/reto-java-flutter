@@ -112,6 +112,9 @@ VALUES ('Halloween4', 'Película terror halloween 4', NOW(), 1, NOW(),1);
 INSERT INTO film (title, description, date, category_id, date_created, director_id)
 VALUES ('Halloween5', 'Película terror halloween 5', NOW(), 1, NOW(),1);
 
+INSERT INTO film (title, description, date, category_id, date_created, director_id)
+VALUES ('V de Venganza', 'V de vendetta', NOW(), 2, NOW(),1);
+
 -- Actores de peliculas
 INSERT INTO film_actor(film_id, actor_id) VALUES (4,1);
 INSERT INTO film_actor(film_id, actor_id) VALUES (4,2);
