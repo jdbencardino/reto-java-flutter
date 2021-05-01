@@ -103,6 +103,7 @@ class _MainScreenCineState extends State<MainScreenCine> {
         return Container();
       case 3:
         //cerrar sesion
+        closeSesion(context);
         return Container();
     }
   }

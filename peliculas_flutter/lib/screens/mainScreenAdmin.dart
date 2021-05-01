@@ -105,6 +105,7 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
         return Container();
       case 3:
         //cerrar sesion
+        closeSesion(context);
         return Container();
     }
   }

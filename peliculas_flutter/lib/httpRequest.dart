@@ -200,3 +200,14 @@ Future<Cine> getDataCinema(uid) async {
     print(e);
   }
 }
+
+void closeSesion(context) async {
+  FirebaseAuth mAuth = FirebaseAuth.instance;
+  if (mAuth != null) {
+    if (mAuth.currentUser.uid.isNotEmpty) {
+      print('User is signed in!');
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushNamed(context, mainScreenId);
+    }
+  }
+}

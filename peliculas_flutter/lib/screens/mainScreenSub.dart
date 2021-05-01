@@ -4,9 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'package:peliculas_flutter/models/subscriber.dart';
+import 'noRegUsScreen.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 
-String mainTitle = 'Principal';
+String mainTitle = 'Lista de Pelìculas';
 int _pos = 0;
 Suscriber _suscriber;
 
@@ -90,7 +91,7 @@ class _MainScreenSubState extends State<MainScreenSub> {
     switch (pos) {
       case 0:
         //listar peliculas
-        return Container();
+        return NoRegUsScreen();
       case 1:
         //mi perfil
         return kSuscribersWidget(_suscriber, 'subscribers');
@@ -99,6 +100,7 @@ class _MainScreenSubState extends State<MainScreenSub> {
         return Container();
       case 3:
         //cerrar sesion
+        closeSesion(context);
         return Container();
     }
   }
@@ -108,7 +110,7 @@ class _MainScreenSubState extends State<MainScreenSub> {
       leading: Icon(icon),
       title: Text(title),
       onTap: () {
-        Navigator.of(context).pop;
+        //Navigator.of(context).pop;
         onClick(true);
       },
     );

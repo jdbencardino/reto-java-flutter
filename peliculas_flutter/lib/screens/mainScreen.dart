@@ -16,7 +16,7 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text('App'),
+        title: Text('PelisApp'),
       ),
       body: bodyLayout(),
     );
