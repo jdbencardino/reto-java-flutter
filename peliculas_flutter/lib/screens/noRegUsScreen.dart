@@ -72,7 +72,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
                   child: Container(
                     margin: EdgeInsets.all(20),
                     child: TextField(
-                      onSubmitted: (value) {
+                      onChanged: (value) {
                         //TODO: set moviesList in httpRequest: getMoviesByTitle()
                         String _key = value;
                         _getFilms(context, query: value);
