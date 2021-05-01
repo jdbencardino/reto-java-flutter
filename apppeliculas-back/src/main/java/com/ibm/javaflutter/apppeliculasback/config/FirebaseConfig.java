@@ -20,6 +20,7 @@ public class FirebaseConfig {
     @Primary
     @Bean
     public FirebaseApp getFirebaseApp() throws IOException {
+        System.out.print(configPath);
         FileInputStream serviceAccount =
                 new FileInputStream(configPath);
         // TODO change to GoogleCredentials.getApplicationDefault()

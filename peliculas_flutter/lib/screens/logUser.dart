@@ -6,6 +6,7 @@ import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LogUser extends StatefulWidget {
   @override
@@ -49,19 +50,11 @@ void continueWithLogin(mAuth, context) async {
       headers: {'Content-Type': 'application/json'},
     );
 
-    String id = jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['id']
-        .toString();
-    String username =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['username'];
-    String name =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['name'];
-    String surname =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['surname'];
-    String email =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['email'];
-    String points =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['points'];
+    respuesta.statusCode < 400
+        ? Fluttertoast.showToast(
+            msg: 'Bienvenido Suscriptor', toastLength: Toast.LENGTH_SHORT)
+        : print(respuesta.statusCode);
 
-    Navigator.pushNamed(context, mainScreenSub);
+    // respuesta.statusCode < 400 ? Navigator.pushNamed(context, mainScreenSub) : print(respuesta.statusCode);
   }
 }

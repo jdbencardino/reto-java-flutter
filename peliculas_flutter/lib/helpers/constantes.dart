@@ -1,5 +1,4 @@
 // Rutas http
-import 'package:peliculas_flutter/itemsScreen/user.dart';
 
 const String url_get_movies = 'http://localhost:8080/films';
 const String url_get_users = 'http://localhost:8080/users';
@@ -28,5 +27,3 @@ const userEmail = 'USEREMAIL';
 const userPoints = 'USEREMAIL';
 const userSurname = 'USEREMAIL';
 const userUid = 'USEREMAIL';
-
-Suscriber user_suscriber;
