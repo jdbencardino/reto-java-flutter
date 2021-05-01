@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/helpers/api_helper.dart';
+import 'package:peliculas_flutter/models/admin.dart';
 import 'package:peliculas_flutter/providers/film.dart';
 import 'helpers/constantes.dart';
 import './helpers/constantes.dart';
@@ -140,6 +141,32 @@ Future<Suscriber> getDataSubscriber(uid) async {
         .reversed
         .toList();
     return suscriber;
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<Admin> getDataAdmin(uid) async {
+  try {
+    Uri uri = Uri.parse('${ApiHelper.url_get_admin_by_id}$uid');
+    final response = await http.get(uri);
+    final responseData = json.decode(response.body) as Map<dynamic, dynamic>;
+
+    final resList = responseData['_embedded']['admins'] as List<dynamic>;
+
+    Admin admin;
+    resList.forEach((data) {
+      admin = Admin(
+        data['id'].toString(),
+        data['username'],
+        uid,
+        data['name'],
+        data['surname'],
+        data['email'],
+      );
+      print("Los datos fueron guardados con Exito");
+    });
+    return admin;
   } catch (e) {
     print(e);
   }

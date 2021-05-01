@@ -11,23 +11,23 @@ Widget kBasedLoginWidget(
     String title, BuildContext context, @required Function onClick) {
   String username, password;
 
-  void onClick(context, email, password) async {
-    //Firebase.initializeApp();
-    FirebaseAuth _auth = FirebaseAuth.instance;
+  // void onClick(context, email, password) async {
+  //   //Firebase.initializeApp();
+  //   FirebaseAuth _auth = FirebaseAuth.instance;
 
-    // configurar el nivel de acceso
-    try {
-      final mAuth = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      if (mAuth != null) {
-        Navigator.pushNamed(context, mainScreenSub);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  //   // configurar el nivel de acceso
+  //   try {
+  //     final mAuth = await _auth.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //     if (mAuth != null) {
+  //       Navigator.pushNamed(context, mainScreenSub);
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   return Material(
     child: SafeArea(
