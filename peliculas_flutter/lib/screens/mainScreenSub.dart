@@ -45,8 +45,8 @@ class _MainScreenSubState extends State<MainScreenSub> {
           child: ListView(
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text('username'),
-                accountEmail: Text('access'),
+                accountName: Text(_suscriber.username),
+                accountEmail: Text(_suscriber.email),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
                   child: Text(
@@ -55,28 +55,28 @@ class _MainScreenSubState extends State<MainScreenSub> {
                   ),
                 ),
               ),
-              listTitle(context, Icons.search, 'Buscar pelìcula', () {
+              listTitle(context, Icons.search, 'Buscar pelìcula', (value) {
+                _pos = 0;
                 setState(() {
-                  mainTitle = 'Principal';
-                  _pos = 0;
+                  mainTitle = 'Buscar pelìcula';
                 });
               }),
-              listTitle(context, Icons.person, 'Mi perfìl', () {
+              listTitle(context, Icons.person, 'Mi perfìl', (value) {
+                _pos = 1;
                 setState(() {
                   mainTitle = 'Mi perfìl';
-                  _pos = 1;
                 });
               }),
-              listTitle(context, Icons.local_offer, 'Ofertas', () {
+              listTitle(context, Icons.local_offer, 'Ofertas', (value) {
+                _pos = 2;
                 setState(() {
                   mainTitle = 'Ofertas';
-                  _pos = 2;
                 });
               }),
-              listTitle(context, Icons.close, 'Cerrar sesiòn', () {
-                setState(() {
-                  _pos = 3;
-                });
+              listTitle(context, Icons.close, 'Cerrar sesiòn', (value) {
+                // ignore: unnecessary_statements
+                _pos = 3;
+                setState(() {});
               }),
             ],
           ),
@@ -93,14 +93,12 @@ class _MainScreenSubState extends State<MainScreenSub> {
         return Container();
       case 1:
         //mi perfil
-        return kSuscribersWidget(_suscriber, 'subscriber');
+        return kSuscribersWidget(_suscriber, 'subscribers');
       case 2:
         //ver ofertas
         return Container();
       case 3:
         //cerrar sesion
-        return Container();
-      default:
         return Container();
     }
   }
@@ -110,8 +108,8 @@ class _MainScreenSubState extends State<MainScreenSub> {
       leading: Icon(icon),
       title: Text(title),
       onTap: () {
-        Navigator.of(context).pop();
-        onClick();
+        Navigator.of(context).pop;
+        onClick(true);
       },
     );
   }
