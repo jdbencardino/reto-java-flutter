@@ -25,12 +25,12 @@ class NoRegUsScreen extends StatefulWidget {
 class _NoRegUsScreenState extends State<NoRegUsScreen> {
   var _isInit = false;
 
-  Future<void> _getFilms(BuildContext context) async {
+  Future<void> _getFilms(BuildContext context, {String query}) async {
     print("Refrescando películas");
     await Provider.of<ListaFilms>(
       context,
       listen: false,
-    ).fetchAndSetFilms();
+    ).fetchAndSetFilms(query: query);
     print("Refrescado");
   }
 
@@ -61,30 +61,31 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
   }
 
   Widget bodyListPelis(_context) {
-    return Column(
-      children: [
-        Container(
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  child: TextField(
-                    onChanged: (value) {
-                      //TODO: set moviesList in httpRequest: getMoviesByTitle()
-                      String _key = value;
-                      print(_key);
-                    },
-                    controller: TextEditingController(),
+    return FutureBuilder(
+      future: _getFilms(_context),
+      builder: (ctx, snapshot) => Column(
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: EdgeInsets.all(20),
+                    child: TextField(
+                      onSubmitted: (value) {
+                        //TODO: set moviesList in httpRequest: getMoviesByTitle()
+                        String _key = value;
+                        _getFilms(context, query: value);
+                        print(_key);
+                      },
+                      controller: TextEditingController(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        FutureBuilder(
-          future: _getFilms(_context),
-          builder: (ctx, snapshot) => Container(
+          Container(
             //drawer: AppDrawer(),
             child: snapshot.connectionState == ConnectionState.waiting
                 ? Center(
@@ -115,8 +116,8 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
                     ),
                   ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

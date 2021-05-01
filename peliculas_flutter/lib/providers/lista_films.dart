@@ -57,8 +57,13 @@ class ListaFilms with ChangeNotifier {
     );
   }
 
-  Future<void> fetchAndSetFilms() async {
-    final url = Uri.parse('${ApiHelper.url_get_movies}');
+  Future<void> fetchAndSetFilms({String query}) async {
+    var url;
+    if (query == null) {
+      url = Uri.parse('${ApiHelper.url_get_movies}');
+    } else {
+      url = Uri.parse('${ApiHelper.url_get_movie_from_title}$query');
+    }
     print(url);
     // TODO add Authentication header to this
 
