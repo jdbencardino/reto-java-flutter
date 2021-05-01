@@ -5,12 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/helpers/api_helper.dart';
 import 'package:peliculas_flutter/providers/film.dart';
-import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'helpers/constantes.dart';
-
-import './screens/itemsScreen/suscriber.dart';
 import './helpers/constantes.dart';
+import 'models/subscriber.dart';
 
 void httpSetFilm(idUser, idFilm, type) async {
   try {
@@ -66,43 +63,7 @@ String getUid() {
   }
 }
 
-Future<void> userType() async {
-  FirebaseAuth mAuth = FirebaseAuth.instance;
-  if (mAuth != null) {
-    String uid = mAuth.currentUser.uid.toString();
-    String url = 'http://localhost:8080/users/search/findByUid?uid=$uid';
-    Uri link = Uri.parse(url);
-    var respuesta = await http.get(link);
-
-    var id = jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['id']
-        .toString();
-    var username =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['username'];
-    var name =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['name'];
-    var surname =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['surname'];
-    var email =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['email'];
-    var points =
-        jsonDecode(respuesta.body)['_embedded']['subscribers'][0]['points'];
-
-    //print('$id');
-
-    var user_suscriber = new Suscriber(
-      id,
-      username,
-      uid,
-      name,
-      surname,
-      email,
-      points,
-    );
-  }
-}
-
 void deleteAccount(uid, _context) async {
-  uid = 'Ctk567bPoOd1QohSz2VcpuuPUvT2';
   try {
     FirebaseAuth _mAuth = FirebaseAuth.instance;
     String token = await _mAuth.currentUser.getIdToken();
@@ -130,26 +91,27 @@ void deleteAccount(uid, _context) async {
   } catch (e) {
     print(e);
   }
-  Future<Object> getMoviesByTitle(title) async {
-    try {
-      Uri uri = Uri.parse('${ApiHelper.url_get_movie_from_title}$title');
-      final response = await http.get(uri);
-      final responseData = json.decode(response.body) as Map<String, dynamic>;
+}
 
-      final resList = responseData['_embedded']['films'] as List<dynamic>;
+Future<Object> getMoviesByTitle(title) async {
+  try {
+    Uri uri = Uri.parse('${ApiHelper.url_get_movie_from_title}$title');
+    final response = await http.get(uri);
+    final responseData = json.decode(response.body) as Map<String, dynamic>;
 
-      final List<Film> filmList = resList
-          .map((data) {
-            final film = Film(title: data['title']);
-            return film;
-          })
-          .toList()
-          .reversed
-          .toList();
+    final resList = responseData['_embedded']['films'] as List<dynamic>;
 
-      return filmList;
-    } catch (e) {}
-  }
+    final List<Film> filmList = resList
+        .map((data) {
+          final film = Film(title: data['title']);
+          return film;
+        })
+        .toList()
+        .reversed
+        .toList();
+
+    return filmList;
+  } catch (e) {}
 }
 
 Future<Suscriber> getDataSubscriber(uid) async {
@@ -163,15 +125,20 @@ Future<Suscriber> getDataSubscriber(uid) async {
     Suscriber suscriber;
     resList
         .map((data) {
-          suscriber = Suscriber(data['id'].toString(), data['username'], uid,
-              data['name'], data['surname'], data['email'], data['points']);
+          suscriber = Suscriber(
+            data['id'].toString(),
+            data['username'],
+            uid,
+            data['name'],
+            data['surname'],
+            data['email'],
+            data['points'],
+          );
           print("Los datos fueron guardados con Exito");
         })
         .toList()
         .reversed
         .toList();
-
-    //return filmList;
     return suscriber;
   } catch (e) {
     print(e);

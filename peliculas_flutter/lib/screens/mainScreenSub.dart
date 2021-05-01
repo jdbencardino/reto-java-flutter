@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'package:peliculas_flutter/models/subscriber.dart';
+import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 
 String mainTitle = 'Principal';
 int _pos = 0;
-Suscriber suscriber;
+Suscriber _suscriber;
 
 class MainScreenSub extends StatefulWidget {
   @override
@@ -17,9 +19,10 @@ class _MainScreenSubState extends State<MainScreenSub> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getSubsData(),
+      future: getDataSubscriber(getUid()),
       builder: (context, snapShot) {
         if (snapShot.connectionState == ConnectionState.done) {
+          _suscriber = snapShot.data;
           return willPopScope();
         } else {
           return Center(child: CircularProgressIndicator());
@@ -61,18 +64,18 @@ class _MainScreenSubState extends State<MainScreenSub> {
               listTitle(context, Icons.person, 'Mi perfìl', () {
                 setState(() {
                   mainTitle = 'Mi perfìl';
-                  _pos = 0;
+                  _pos = 1;
                 });
               }),
               listTitle(context, Icons.local_offer, 'Ofertas', () {
                 setState(() {
                   mainTitle = 'Ofertas';
-                  _pos = 0;
+                  _pos = 2;
                 });
               }),
               listTitle(context, Icons.close, 'Cerrar sesiòn', () {
                 setState(() {
-                  _pos = 0;
+                  _pos = 3;
                 });
               }),
             ],
@@ -83,22 +86,18 @@ class _MainScreenSubState extends State<MainScreenSub> {
     );
   }
 
-  Future<void> getSubsData() {
-    return null;
-  }
-
   Widget _getWidgetItemSelected(int pos) {
     switch (pos) {
       case 0:
         //listar peliculas
         return Container();
-      case 0:
+      case 1:
         //mi perfil
-        return Container();
-      case 0:
+        return kSuscribersWidget(_suscriber, 'subscriber');
+      case 2:
         //ver ofertas
         return Container();
-      case 0:
+      case 3:
         //cerrar sesion
         return Container();
       default:
