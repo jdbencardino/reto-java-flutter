@@ -43,7 +43,8 @@ Future<void> onClickLog(context, email, password) async {
 void continueWithLogin(mAuth, context) async {
   if (mAuth != null) {
     String uid = mAuth.currentUser.uid;
-    String url = 'http://localhost:8080/users/search/findByUid?uid=${uid}';
+    String url =
+        'http://localhost:8080/subscribers/search/findByUid?uid=${uid}';
     Uri link = Uri.parse(url);
     var respuesta = await http.get(
       link,

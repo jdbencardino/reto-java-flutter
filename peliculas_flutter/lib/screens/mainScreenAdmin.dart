@@ -7,6 +7,7 @@ import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'package:peliculas_flutter/models/subscriber.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/widgets/kAdminWidget.dart';
+import 'noRegUsScreen.dart';
 
 class MainScreenAdmin extends StatefulWidget {
   @override
@@ -73,6 +74,12 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
                   mainTitle = 'Mi perfìl';
                 });
               }),
+              listTitle(context, Icons.person_add, 'Mi perfìl', (value) {
+                _pos = 4;
+                setState(() {
+                  mainTitle = 'User Profile';
+                });
+              }),
               listTitle(context, Icons.local_offer, 'Ofertas', (value) {
                 _pos = 2;
                 setState(() {
@@ -96,7 +103,7 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
     switch (pos) {
       case 0:
         //listar peliculas
-        return Container();
+        return NoRegUsScreen().createState().bodyListPelis(context);
       case 1:
         //mi perfil
         return kAdminWidget(_admin, 'subscribers');
@@ -106,6 +113,9 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
       case 3:
         //cerrar sesion
         closeSesion(context);
+        return Container();
+      case 4:
+        //cerrar sesion
         return Container();
     }
   }

@@ -52,14 +52,6 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
     );
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInit) {
-      _isInit = true;
-    }
-  }
-
   Widget bodyListPelis(_context) {
     return FutureBuilder(
       future: _getFilms(_context),
@@ -106,7 +98,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
                               itemBuilder: (_, i) => GestureDetector(
                                 onTap: () {
                                   print('movie: ${films.list[i].title}');
-                                  _alertDialog(films.list[i]);
+                                  //_alertDialog(films.list[i]);
                                 },
                                 child: ListTile(
                                   title: Text(films.list[i].title),
@@ -119,6 +111,14 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInit) {
+      _isInit = true;
+    }
   }
 
   @override
