@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas_flutter/providers/film.dart';
+import 'package:peliculas_flutter/widgets/ListPelis.dart';
 import 'package:peliculas_flutter/widgets/filmDetails.dart';
 import 'package:provider/provider.dart';
 
@@ -125,11 +126,11 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
   Widget build(BuildContext context) {
     // return Consumer<ListaFilms>()
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Lista Pelìculas'),
-        ),
-        //TODO agregar accion para buscar películas
-        body: bodyListPelis(context));
+      appBar: AppBar(
+        title: Text('Lista Pelìculas'),
+      ),
+      body: ListaPelis(),
+    );
   }
 }
 
