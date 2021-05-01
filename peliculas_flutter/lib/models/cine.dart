@@ -1,6 +1,8 @@
 import 'package:peliculas_flutter/models/user.dart';
 
 class Cine extends User {
+  static const roleName = 'cine';
+
   String web, address;
 
   Cine(

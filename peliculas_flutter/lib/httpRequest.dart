@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/helpers/api_helper.dart';
 import 'package:peliculas_flutter/providers/film.dart';
-import 'package:peliculas_flutter/models/suscriber.dart';
+import 'package:peliculas_flutter/models/subscriber.dart';
 import 'helpers/constantes.dart';
 
-import 'models/suscriber.dart';
+import 'models/subscriber.dart';
 import './helpers/constantes.dart';
 
 void httpSetFilm(idUser, idFilm, type) async {

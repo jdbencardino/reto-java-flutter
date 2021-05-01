@@ -1,4 +1,6 @@
 class User {
+  static const roleName = 'user';
+
   String id, username, uid, name, surname, email;
 
   User(
