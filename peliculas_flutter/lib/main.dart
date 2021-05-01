@@ -8,9 +8,11 @@ import 'screens/logCine.dart';
 import 'screens/regUser.dart';
 import 'screens/mainScreen.dart';
 import 'screens/noRegUsScreen.dart';
-import 'screens/mainScreenInside.dart';
 import 'screens/logUser.dart';
 import 'helpers/constantes.dart';
+import 'screens/mainScreenSub.dart';
+import 'screens/mainScreenCine.dart';
+import 'screens/mainScreenAdmin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

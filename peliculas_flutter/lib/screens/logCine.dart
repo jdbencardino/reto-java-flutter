@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
@@ -6,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas_flutter/screens/logUser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LogCine extends StatefulWidget {
   @override
@@ -26,7 +29,6 @@ class _LogCineState extends State<LogCine> {
 }
 
 void onClick(context, email, password) async {
-  //Firebase.initializeApp();
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   try {
@@ -35,11 +37,26 @@ void onClick(context, email, password) async {
       password: password,
     );
     if (mAuth != null) {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('email', _auth.currentUser.email);
-      prefs.setString('uid', _auth.currentUser.uid);
-      prefs.setString('accesLevel', 'Cine');
-      Navigator.pushNamed(context, mainScreenCine);
+      String uid = mAuth.user.uid;
+      String url = 'http://localhost:8080/cinemas/search/findByUid?uid=${uid}';
+      Uri link = Uri.parse(url);
+      var respuesta = await http.get(
+        link,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      respuesta.statusCode < 400
+          ? Fluttertoast.showToast(
+              msg: 'Bienvenido Cinema',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              fontSize: 16.0)
+          : print(respuesta.statusCode);
+
+      respuesta.statusCode < 400
+          ? Navigator.pushNamed(context, mainScreenCine)
+          : print(respuesta.statusCode);
     }
   } catch (e) {
     print(e);

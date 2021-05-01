@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 
@@ -240,4 +242,83 @@ Widget listTitle(icon, title, @required onClick) {
   );
 }
 
-Widget userProfile() {}
+Widget kSuscribersWidget(Suscriber subscriber, String access_level) {
+  return Container(
+    child: Column(
+      children: [
+        kTextUserPlantilla(subscriber.username,
+            'digite su nuevo nombre de user', Icon(Icons.edit), (value) {
+          if (value != null) {
+            if (value.toString().isNotEmpty) {
+              httpUpdateSubs(subscriber.id, 'username', value, access_level);
+            }
+          }
+        }),
+        kTextUserPlantilla(
+            subscriber.name, 'digite su nuevo nombre', Icon(Icons.edit),
+            (value) {
+          if (value != null) {
+            if (value.toString().isNotEmpty) {
+              httpUpdateSubs(subscriber.id, 'name', value, access_level);
+            }
+          }
+        }),
+        kTextUserPlantilla(
+            subscriber.surname, 'digite su nuevo apellido', Icon(Icons.edit),
+            (value) {
+          if (value != null) {
+            if (value.toString().isNotEmpty) {
+              httpUpdateSubs(subscriber.id, 'surname', value, access_level);
+            }
+          }
+        }),
+        Center(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Text('Email: ${subscriber.email}'),
+          ),
+        ),
+        Center(
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Text('Puntos: ${subscriber.points}'),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget kTextUserPlantilla(data, key_data, icon, @required Function fn) {
+  String new_data;
+
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Center(
+        child: Container(padding: EdgeInsets.all(10), child: Text(data)),
+      ),
+      Expanded(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: TextField(
+            onChanged: (value) {
+              new_data = value;
+            },
+            controller: TextEditingController(),
+            decoration: InputDecoration(hintText: key_data),
+          ),
+        ),
+      ),
+      Container(
+        padding: EdgeInsets.all(10),
+        child: GestureDetector(
+          onTap: () {
+            fn(new_data);
+          },
+          child: icon,
+        ),
+      )
+    ],
+  );
+}

@@ -4,6 +4,8 @@ import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LogAdmin extends StatefulWidget {
   @override
@@ -33,11 +35,26 @@ void onClick(context, email, password) async {
       password: password,
     );
     if (mAuth != null) {
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setString('email', _auth.currentUser.email);
-      prefs.setString('uid', _auth.currentUser.uid);
-      prefs.setString('accesLevel', 'Administrador');
-      Navigator.pushNamed(context, mainScreenAdmin);
+      String uid = mAuth.user.uid;
+      String url = 'http://localhost:8080/admins/search/findByUid?uid=${uid}';
+      Uri link = Uri.parse(url);
+      var respuesta = await http.get(
+        link,
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      respuesta.statusCode < 400
+          ? Fluttertoast.showToast(
+              msg: 'Bienvenido Admin',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              fontSize: 16.0)
+          : print(respuesta.statusCode);
+
+      respuesta.statusCode < 400
+          ? Navigator.pushNamed(context, mainScreenAdmin)
+          : print(respuesta.statusCode);
     }
   } catch (e) {
     print(e);

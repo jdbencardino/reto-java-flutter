@@ -43,6 +43,20 @@ void httpUpdate(id, key, data) async {
   print(response.statusCode);
 }
 
+void httpUpdateSubs(id, key, data, access_level) async {
+  Uri url = Uri.parse('http://localhost:8080/$access_level/$id');
+  var response = await http.patch(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode(
+      <Object, Object>{
+        key: data,
+      },
+    ),
+  );
+  print(response.statusCode);
+}
+
 String getUid() {
   FirebaseAuth mAuth = FirebaseAuth.instance;
   if (mAuth != null) {
@@ -116,44 +130,50 @@ void deleteAccount(uid, _context) async {
   } catch (e) {
     print(e);
   }
-Future<Object> getMoviesByTitle(title) async {
-  try {
-    Uri uri = Uri.parse('${ApiHelper.url_get_movie_from_title}$title');
-    final response = await http.get(uri);
-    final responseData = json.decode(response.body) as Map<String, dynamic>;
+  Future<Object> getMoviesByTitle(title) async {
+    try {
+      Uri uri = Uri.parse('${ApiHelper.url_get_movie_from_title}$title');
+      final response = await http.get(uri);
+      final responseData = json.decode(response.body) as Map<String, dynamic>;
 
-    final resList = responseData['_embedded']['films'] as List<dynamic>;
+      final resList = responseData['_embedded']['films'] as List<dynamic>;
 
-    final List<Film> filmList = resList
-        .map((data) {
-          final film = Film(title: data['title']);
-          return film;
-        })
-        .toList()
-        .reversed
-        .toList();
+      final List<Film> filmList = resList
+          .map((data) {
+            final film = Film(title: data['title']);
+            return film;
+          })
+          .toList()
+          .reversed
+          .toList();
 
-    return filmList;
-  } catch (e) {}
+      return filmList;
+    } catch (e) {}
+  }
 }
 
-Future<Suscriber> getDataSubscriber() async {
+Future<Suscriber> getDataSubscriber(uid) async {
   try {
-    Uri uri = Uri.parse('${ApiHelper.url_get_users}$title');
+    Uri uri = Uri.parse('${ApiHelper.url_get_subscriber_by_id}$uid');
     final response = await http.get(uri);
-    final responseData = json.decode(response.body) as Map<String, dynamic>;
+    final responseData = json.decode(response.body) as Map<dynamic, dynamic>;
 
-    final resList = responseData['_embedded']['films'] as List<dynamic>;
+    final resList = responseData['_embedded']['subscribers'] as List<dynamic>;
 
-    final List<Film> filmList = resList
+    Suscriber suscriber;
+    resList
         .map((data) {
-          final film = Film(title: data['title']);
-          return film;
+          suscriber = Suscriber(data['id'].toString(), data['username'], uid,
+              data['name'], data['surname'], data['email'], data['points']);
+          print("Los datos fueron guardados con Exito");
         })
         .toList()
         .reversed
         .toList();
 
-    return filmList;
-  } catch (e) {}
+    //return filmList;
+    return suscriber;
+  } catch (e) {
+    print(e);
+  }
 }

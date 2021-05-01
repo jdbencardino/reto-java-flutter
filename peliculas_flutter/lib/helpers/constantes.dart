@@ -28,5 +28,3 @@ const userEmail = 'USEREMAIL';
 const userPoints = 'USEREMAIL';
 const userSurname = 'USEREMAIL';
 const userUid = 'USEREMAIL';
-
-Suscriber user_suscriber;
