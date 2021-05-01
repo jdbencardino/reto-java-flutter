@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/screens/mainScreenAdmin.dart';
 import 'package:peliculas_flutter/screens/mainScreenCine.dart';
@@ -43,6 +44,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    //FirebaseAuth mAuth = FirebaseAuth.instance;
+    //mAuth != null ? Navigator.pushNamed(context, Mains): print('not is user');
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(

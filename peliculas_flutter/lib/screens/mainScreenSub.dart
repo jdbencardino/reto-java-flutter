@@ -91,7 +91,7 @@ class _MainScreenSubState extends State<MainScreenSub> {
     switch (pos) {
       case 0:
         //listar peliculas
-        return NoRegUsScreen();
+        return NoRegUsScreen().createState().bodyListPelis(context);
       case 1:
         //mi perfil
         return kSuscribersWidget(_suscriber, 'subscribers');

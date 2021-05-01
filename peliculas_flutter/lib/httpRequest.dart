@@ -207,7 +207,8 @@ void closeSesion(context) async {
     if (mAuth.currentUser.uid.isNotEmpty) {
       print('User is signed in!');
       await FirebaseAuth.instance.signOut();
-      Navigator.pushNamed(context, mainScreenId);
+      //Navigator.popAndPushNamed(context, mainScreenId);
+      Navigator.pushReplacementNamed(context, mainScreenId);
     }
   }
 }
