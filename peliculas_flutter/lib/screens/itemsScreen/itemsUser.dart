@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 import '../../httpRequest.dart';
-import './suscriber.dart';
+import '../../models/suscriber.dart';
 import '../../widgets/basedWidgets.dart';
 
 Suscriber suscriber;

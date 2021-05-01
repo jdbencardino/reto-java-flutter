@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_flutter/screens/mainScreenAdmin.dart';
+import 'package:peliculas_flutter/screens/mainScreenCine.dart';
+import 'package:peliculas_flutter/screens/mainScreenSub.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -8,7 +11,6 @@ import 'screens/logCine.dart';
 import 'screens/regUser.dart';
 import 'screens/mainScreen.dart';
 import 'screens/noRegUsScreen.dart';
-import 'screens/mainScreenInside.dart';
 import 'screens/logUser.dart';
 import 'helpers/constantes.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
-import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
+import 'package:peliculas_flutter/models/suscriber.dart';
 
 String mainTitle = 'Principal';
 int _pos = 0;
