@@ -1,6 +1,3 @@
 .DS_Store
-<<<<<<< Updated upstream
-apppeliculas-back/resources/reto-flutter-java-firebase-adminsdk-30sq7-2997658c41.json
-=======
-apppeliculas-back/src/main/resources/application.properties
->>>>>>> Stashed changes
+reto-flutter-java-firebase-adminsdk-30sq7-2997658c41.json
+application.properties

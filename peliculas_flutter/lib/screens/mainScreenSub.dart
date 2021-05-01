@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
-import 'package:peliculas_flutter/screens/itemsScreen/suscriber.dart';
-import 'package:peliculas_flutter/widgets/basedWidgets.dart';
+import 'package:peliculas_flutter/models/subscriber.dart';
 
 String mainTitle = 'Principal';
 int _pos = 0;
-Suscriber _suscriber;
+Suscriber suscriber;
 
 class MainScreenSub extends StatefulWidget {
   @override
@@ -18,7 +16,16 @@ class MainScreenSub extends StatefulWidget {
 class _MainScreenSubState extends State<MainScreenSub> {
   @override
   Widget build(BuildContext context) {
-    return willPopScope();
+    return FutureBuilder(
+      future: getSubsData(),
+      builder: (context, snapShot) {
+        if (snapShot.connectionState == ConnectionState.done) {
+          return willPopScope();
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 
   Widget willPopScope() {
@@ -35,7 +42,7 @@ class _MainScreenSubState extends State<MainScreenSub> {
           child: ListView(
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text('name'),
+                accountName: Text('username'),
                 accountEmail: Text('access'),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor: Colors.white,
@@ -54,18 +61,18 @@ class _MainScreenSubState extends State<MainScreenSub> {
               listTitle(context, Icons.person, 'Mi perfìl', () {
                 setState(() {
                   mainTitle = 'Mi perfìl';
-                  _pos = 1;
+                  _pos = 0;
                 });
               }),
               listTitle(context, Icons.local_offer, 'Ofertas', () {
                 setState(() {
                   mainTitle = 'Ofertas';
-                  _pos = 2;
+                  _pos = 0;
                 });
               }),
               listTitle(context, Icons.close, 'Cerrar sesiòn', () {
                 setState(() {
-                  _pos = 3;
+                  _pos = 0;
                 });
               }),
             ],
@@ -76,29 +83,22 @@ class _MainScreenSubState extends State<MainScreenSub> {
     );
   }
 
+  Future<void> getSubsData() {
+    return null;
+  }
+
   Widget _getWidgetItemSelected(int pos) {
     switch (pos) {
       case 0:
         //listar peliculas
         return Container();
-      case 1:
+      case 0:
         //mi perfil
-        print('holita');
-        return FutureBuilder(
-          // ignore: missing_return
-          builder: (context, snapShot) {
-            if (snapShot.connectionState == ConnectionState.done) {
-              _suscriber = snapShot.data;
-              return kSuscribersWidget(snapShot.data, 'subscribers');
-            }
-            return Container();
-          },
-          future: getDataSubscriber(getUid()),
-        );
-      case 2:
+        return Container();
+      case 0:
         //ver ofertas
         return Container();
-      case 3:
+      case 0:
         //cerrar sesion
         return Container();
       default:
