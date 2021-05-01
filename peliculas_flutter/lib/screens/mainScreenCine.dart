@@ -56,7 +56,10 @@ class _MainScreenCineState extends State<MainScreenCine> {
                   backgroundColor: Colors.white,
                   child: Text(
                     'C',
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.yellow,
+                    ),
                   ),
                 ),
               ),

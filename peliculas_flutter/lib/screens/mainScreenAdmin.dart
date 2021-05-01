@@ -59,7 +59,10 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
                   backgroundColor: Colors.white,
                   child: Text(
                     'A',
-                    style: TextStyle(fontSize: 40),
+                    style: TextStyle(
+                      fontSize: 40,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ),
@@ -96,6 +99,15 @@ class _MainScreenAdminState extends State<MainScreenAdmin> {
           ),
         ),
         body: _getWidgetItemSelected(_pos),
+        floatingActionButton: _pos == 0
+            ? FloatingActionButton(
+                backgroundColor: Colors.red,
+                child: Icon(Icons.add),
+                onPressed: () {
+                  print("Agregar película");
+                },
+              )
+            : null,
       ),
     );
   }
