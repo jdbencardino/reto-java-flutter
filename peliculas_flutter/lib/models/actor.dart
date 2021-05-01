@@ -1,0 +1,3 @@
+class Actor {
+  String name;
+}

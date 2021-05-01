@@ -6,7 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:peliculas_flutter/models/subscriber.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
-import 'package:peliculas_flutter/httpRequest.dart';
 
 Widget kBasedLoginWidget(
     String title, BuildContext context, @required Function onClick) {

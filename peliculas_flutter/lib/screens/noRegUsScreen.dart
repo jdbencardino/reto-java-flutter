@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas_flutter/providers/film.dart';
+import 'package:peliculas_flutter/widgets/filmDetails.dart';
 import 'package:provider/provider.dart';
 
 import 'package:peliculas_flutter/httpRequest.dart';
@@ -30,6 +32,24 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
       listen: false,
     ).fetchAndSetFilms();
     print("Refrescado");
+  }
+
+  _alertDialog(Film film) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(film.title),
+        content: FilmDetails(film),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(ctx).pop();
+            },
+            child: Text("OK"),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -85,6 +105,7 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
                               itemBuilder: (_, i) => GestureDetector(
                                 onTap: () {
                                   print('movie: ${films.list[i].title}');
+                                  _alertDialog(films.list[i]);
                                 },
                                 child: ListTile(
                                   title: Text(films.list[i].title),
