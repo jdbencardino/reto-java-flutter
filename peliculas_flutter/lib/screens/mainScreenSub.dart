@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:peliculas_flutter/httpRequest.dart';
 import 'package:peliculas_flutter/screens/itemsScreen/itemsUser.dart';
 import 'package:peliculas_flutter/models/subscriber.dart';
+import 'package:peliculas_flutter/widgets/ListPelis.dart';
 import 'noRegUsScreen.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 
@@ -91,7 +92,7 @@ class _MainScreenSubState extends State<MainScreenSub> {
     switch (pos) {
       case 0:
         //listar peliculas
-        return NoRegUsScreen().createState().bodyListPelis(context);
+        return ListaPelis();
       case 1:
         //mi perfil
         return kSuscribersWidget(_suscriber, 'subscribers');

@@ -1,30 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:peliculas_flutter/helpers/constantes.dart';
-import 'package:http/http.dart' as http;
 import 'package:peliculas_flutter/providers/film.dart';
+import 'package:peliculas_flutter/providers/lista_films.dart';
 import 'package:peliculas_flutter/widgets/filmDetails.dart';
 import 'package:provider/provider.dart';
 
-import 'package:peliculas_flutter/httpRequest.dart';
-import 'package:peliculas_flutter/providers/lista_films.dart';
-import 'package:peliculas_flutter/widgets/basedWidgets.dart';
-
-import '../providers/lista_films.dart';
-
-String urlDesigned = url_get_movies;
-var isUser;
-
-class NoRegUsScreen extends StatefulWidget {
+class ListaPelis extends StatefulWidget {
   @override
-  _NoRegUsScreenState createState() => _NoRegUsScreenState();
+  _ListaPelisState createState() => _ListaPelisState();
 }
 
-class _NoRegUsScreenState extends State<NoRegUsScreen> {
-  var _isInit = false;
-
+class _ListaPelisState extends State<ListaPelis> {
   Future<void> _getFilms(BuildContext context, {String query}) async {
     print("Refrescando películas");
     await Provider.of<ListaFilms>(
@@ -52,9 +37,10 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
     );
   }
 
-  Widget bodyListPelis(_context) {
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _getFilms(_context),
+      future: _getFilms(context),
       builder: (ctx, snapshot) => Column(
         children: [
           Container(
@@ -111,25 +97,5 @@ class _NoRegUsScreenState extends State<NoRegUsScreen> {
         ],
       ),
     );
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isInit) {
-      _isInit = true;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // return Consumer<ListaFilms>()
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.deepOrangeAccent,
-          title: Text('Lista Pelìculas'),
-        ),
-        //TODO agregar accion para buscar películas
-        body: bodyListPelis(context));
   }
 }
