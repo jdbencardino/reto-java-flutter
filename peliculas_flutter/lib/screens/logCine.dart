@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:http/http.dart' as http;
@@ -24,7 +25,12 @@ class _LogCineState extends State<LogCine> {
 
   @override
   Widget build(BuildContext context) {
-    return kBasedLoginWidget('Log Cine', context, onClick);
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.yellow,
+          title: Text('Entrar como Cinema'),
+        ),
+        body: kBasedLoginWidget('Log Cine', context, onClick));
   }
 }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:peliculas_flutter/helpers/constantes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,7 +22,13 @@ class _LogAdminState extends State<LogAdmin> {
 
   @override
   Widget build(BuildContext context) {
-    return kBasedLoginWidget('Log admin', context, onClick);
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.red,
+        title: Text('Entrar como Administrador'),
+      ),
+      body: kBasedLoginWidget('Log admin', context, onClick),
+    );
   }
 }
 

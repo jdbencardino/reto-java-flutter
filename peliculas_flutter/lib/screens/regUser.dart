@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:peliculas_flutter/widgets/basedWidgets.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,11 @@ class _RegUserState extends State<RegUser> {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return kBasedRegisterWidget('Reg User', context, onClick);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('¡Registrate!'),
+        ),
+        body: kBasedRegisterWidget('Reg User', context, onClick));
   }
 }
 

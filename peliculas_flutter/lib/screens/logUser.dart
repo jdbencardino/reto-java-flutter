@@ -79,6 +79,8 @@ void continueWithLogin(mAuth, context) async {
             msg: 'Bienvenido Suscriptor', toastLength: Toast.LENGTH_SHORT)
         : print(respuesta.statusCode);
 
-    // respuesta.statusCode < 400 ? Navigator.pushNamed(context, mainScreenSub) : print(respuesta.statusCode);
+    respuesta.statusCode < 400
+        ? Navigator.pushNamed(context, mainScreenSub)
+        : print(respuesta.statusCode);
   }
 }
